@@ -41,62 +41,53 @@ npm run build
 echo "  powerbi-report-mcp installed ✓"
 echo ""
 
-# Install powerbi-modeling-mcp
-echo "Installing powerbi-modeling-mcp..."
-if [ -d "$MCP_DIR/powerbi-modeling-mcp" ]; then
-    echo "  Already installed, pulling latest..."
-    cd "$MCP_DIR/powerbi-modeling-mcp" && git pull
-else
-    git clone https://github.com/microsoft/powerbi-modeling-mcp.git "$MCP_DIR/powerbi-modeling-mcp"
-fi
-cd "$MCP_DIR/powerbi-modeling-mcp"
-npm install
-npm run build
-echo "  powerbi-modeling-mcp installed ✓"
+# Prepare powerbi-modeling-mcp
+# NOTE: The microsoft/powerbi-modeling-mcp repo is docs-only (no package.json).
+# The server ships as the npm package @microsoft/powerbi-modeling-mcp and is run
+# via npx — npx downloads/caches it on first use, so there is nothing to build here.
+echo "Preparing powerbi-modeling-mcp (npx)..."
+echo "  Pre-warming npx cache (downloads the package)..."
+npx -y @microsoft/powerbi-modeling-mcp@latest --help >/dev/null 2>&1 || {
+    echo "  WARNING: could not pre-warm @microsoft/powerbi-modeling-mcp."
+    echo "           It will still be fetched by npx at runtime."
+}
+echo "  powerbi-modeling-mcp ready ✓"
 echo ""
 
 # Generate MCP config
+# Claude Code reads project MCP servers from .mcp.json at the repo root.
+# Cursor reads them from .cursor/mcp.json. The report server runs from the built
+# dist; the modeling server runs via npx (no local build).
 echo "Generating MCP configuration..."
 
-CLAUDE_SETTINGS="$REPO_ROOT/.claude"
+CLAUDE_MCP="$REPO_ROOT/.mcp.json"
 CURSOR_SETTINGS="$REPO_ROOT/.cursor"
 
-mkdir -p "$CLAUDE_SETTINGS" "$CURSOR_SETTINGS"
+mkdir -p "$CURSOR_SETTINGS"
 
-# Claude Code settings
-cat > "$CLAUDE_SETTINGS/settings.json" << EOF
+read -r -d '' MCP_JSON << EOF || true
 {
     "mcpServers": {
         "powerbi-report": {
+            "type": "stdio",
             "command": "node",
             "args": ["$MCP_DIR/powerbi-report-mcp/dist/index.js"]
         },
         "powerbi-modeling": {
-            "command": "node",
-            "args": ["$MCP_DIR/powerbi-modeling-mcp/dist/index.js"]
+            "type": "stdio",
+            "command": "npx",
+            "args": ["-y", "@microsoft/powerbi-modeling-mcp@latest", "--start"]
         }
     }
 }
 EOF
 
-# Cursor settings
-cat > "$CURSOR_SETTINGS/mcp.json" << EOF
-{
-    "mcpServers": {
-        "powerbi-report": {
-            "command": "node",
-            "args": ["$MCP_DIR/powerbi-report-mcp/dist/index.js"]
-        },
-        "powerbi-modeling": {
-            "command": "node",
-            "args": ["$MCP_DIR/powerbi-modeling-mcp/dist/index.js"]
-        }
-    }
-}
-EOF
+# Claude Code (.mcp.json) and Cursor (.cursor/mcp.json) use the same schema
+printf '%s\n' "$MCP_JSON" > "$CLAUDE_MCP"
+printf '%s\n' "$MCP_JSON" > "$CURSOR_SETTINGS/mcp.json"
 
-echo "  Claude Code settings: $CLAUDE_SETTINGS/settings.json"
-echo "  Cursor settings: $CURSOR_SETTINGS/mcp.json"
+echo "  Claude Code config: $CLAUDE_MCP"
+echo "  Cursor config: $CURSOR_SETTINGS/mcp.json"
 echo ""
 
 echo "=== Setup Complete ==="

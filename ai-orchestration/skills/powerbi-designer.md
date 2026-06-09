@@ -296,7 +296,7 @@ If using a KPI pack:
 ### Step 4: Generate Report
 
 Using powerbi-report-mcp:
-1. Create .pbip structure
+1. Connect to the target report with `pbir_set_report` (path to the `.pbip`/`.Report` folder). The report must already exist — if there is none, create a blank `.pbip` in Power BI Desktop first. `powerbi-report-mcp` edits an existing report; it does not scaffold one.
 2. Apply Modern Fintech theme (light as default, dark as alternate)
 3. Generate pages per layout template
 4. Apply fintech card styling (rounded corners, shadows, bold values)

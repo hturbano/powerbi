@@ -29,7 +29,22 @@ git clone https://github.com/hturbano/powerbi.git
 cd powerbi
 ```
 
-Open in Claude Code or Cursor. The skill file is auto-loaded.
+### 1b. Install the Skill
+
+Claude Code and Cursor do **not** auto-load arbitrary markdown — they discover skills
+in a `skills/` directory. Install the skill so it can trigger:
+
+**Claude Code** (user-level, available in every project):
+
+```bash
+mkdir -p ~/.claude/skills/powerbi-designer
+cp ai-orchestration/skills/powerbi-designer.md ~/.claude/skills/powerbi-designer/SKILL.md
+```
+
+Or project-level (this repo only): copy it to `.claude/skills/powerbi-designer/SKILL.md`.
+
+> **Note:** MCP servers load when the editor starts. After running the MCP setup
+> below, **restart Claude Code / Cursor** in this folder so the servers are available.
 
 ### 2. Onboarding
 
@@ -54,6 +69,12 @@ bash scripts/setup-mcp.sh
 ```
 
 ### 4. Generate Your First Report
+
+> **Prerequisite:** `powerbi-report-mcp` *edits* a PBIR report — it connects to an
+> existing `.pbip` / `.Report` folder and does not scaffold one from nothing. Create
+> a blank report in **Power BI Desktop** (File → Save as `.pbip`, enabling the PBIR
+> format) first, then point the skill at that folder. The semantic model is managed
+> by `powerbi-modeling-mcp`.
 
 ```
 Build an education dashboard using the Education KPI pack with:
