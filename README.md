@@ -75,6 +75,12 @@ bash scripts/setup-mcp.sh
 > a blank report in **Power BI Desktop** (File → Save as `.pbip`, enabling the PBIR
 > format) first, then point the skill at that folder. The semantic model is managed
 > by `powerbi-modeling-mcp`.
+>
+> **Enhanced PBIR required:** the `.Report` folder must contain a `definition/`
+> subfolder (enhanced PBIR). Legacy `.pbip` files store a single root `report.json`
+> and will fail to connect (`No .Report folder found`). Convert once in Power BI
+> Desktop — see [docs/GOTCHAS.md](docs/GOTCHAS.md#report-must-be-in-enhanced-pbir-format-definition-folder).
+> Also close Power BI Desktop before a batch of MCP edits so saves don't clobber them.
 
 ```
 Build an education dashboard using the Education KPI pack with:
