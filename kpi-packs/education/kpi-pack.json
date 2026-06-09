@@ -1,0 +1,130 @@
+{
+    "metadata": {
+        "name": "Education KPI Pack",
+        "author": "hturbano",
+        "version": "1.0.0",
+        "description": "Education-focused KPI templates for student performance, attendance, and institutional metrics. Designed for K-12 and higher education."
+    },
+    "fieldMapping": {
+        "required": [
+            {
+                "name": "dateColumn",
+                "description": "Date column for time-based analysis",
+                "examples": ["Date", "SchoolYear", "AcademicYear", "EnrollmentDate"],
+                "type": "date"
+            },
+            {
+                "name": "studentIdColumn",
+                "description": "Unique student identifier",
+                "examples": ["StudentID", "StudentNumber", "ID"],
+                "type": "text"
+            }
+        ],
+        "optional": [
+            {
+                "name": "campusColumn",
+                "description": "Campus or school name for breakdown",
+                "examples": ["Campus", "School", "Building", "Site"],
+                "type": "text"
+            },
+            {
+                "name": "gradeColumn",
+                "description": "Grade level",
+                "examples": ["Grade", "GradeLevel", "Year"],
+                "type": "text"
+            },
+            {
+                "name": "demographicColumn",
+                "description": "Demographic category for equity analysis",
+                "examples": ["Ethnicity", "Gender", "ELLStatus", "SpecialEd"],
+                "type": "text"
+            }
+        ]
+    },
+    "kpis": [
+        {
+            "name": "Total Enrollment",
+            "description": "Count of unique students enrolled",
+            "baseExpression": "DISTINCTCOUNT({studentIdColumn})",
+            "format": "wholeNumber",
+            "trend": "YoY_Change",
+            "cardStyle": "large"
+        },
+        {
+            "name": "ADA Rate",
+            "description": "Average Daily Attendance as a percentage",
+            "baseExpression": "DIVIDE(SUM(DaysPresent), SUM(SchoolDays), 0)",
+            "format": "percentage",
+            "target": 0.96,
+            "conditionalFormat": {
+                "green": ">= 0.96",
+                "amber": ">= 0.94",
+                "red": "< 0.94"
+            },
+            "cardStyle": "large"
+        },
+        {
+            "name": "Chronic Absenteeism Rate",
+            "description": "Percentage of students missing 10%+ of school days",
+            "baseExpression": "DIVIDE(COUNTROWS(FILTER(Students, [AbsenceRate] >= 0.1)), DISTINCTCOUNT({studentIdColumn}), 0)",
+            "format": "percentage",
+            "target": 0.10,
+            "conditionalFormat": {
+                "green": "<= 0.10",
+                "amber": "<= 0.15",
+                "red": "> 0.15"
+            },
+            "cardStyle": "standard",
+            "lowerIsBetter": true
+        },
+        {
+            "name": "Graduation Rate",
+            "description": "4-year cohort graduation rate",
+            "baseExpression": "DIVIDE(COUNTROWS(FILTER(Students, [Status] = \"Graduated\")), COUNTROWS(Students), 0)",
+            "format": "percentage",
+            "target": 0.90,
+            "cardStyle": "standard"
+        },
+        {
+            "name": "Suspension Rate",
+            "description": "Percentage of students with at least one suspension",
+            "baseExpression": "DIVIDE(COUNTROWS(FILTER(Students, [Suspensions] > 0)), DISTINCTCOUNT({studentIdColumn}), 0)",
+            "format": "percentage",
+            "target": 0.05,
+            "cardStyle": "standard",
+            "lowerIsBetter": true
+        },
+        {
+            "name": "Teacher Retention",
+            "description": "Percentage of teachers returning year-over-year",
+            "baseExpression": "DIVIDE(COUNTROWS(FILTER(Teachers, [Returned] = TRUE())), COUNTROWS(Teachers), 0)",
+            "format": "percentage",
+            "target": 0.90,
+            "cardStyle": "standard"
+        }
+    ],
+    "layouts": [
+        {
+            "name": "Executive Summary",
+            "description": "High-level district overview with top KPIs and trends",
+            "visuals": [
+                {"type": "card", "kpi": "Total Enrollment", "position": "kpi-row-1"},
+                {"type": "card", "kpi": "ADA Rate", "position": "kpi-row-1"},
+                {"type": "card", "kpi": "Graduation Rate", "position": "kpi-row-1"},
+                {"type": "card", "kpi": "Chronic Absenteeism Rate", "position": "kpi-row-1"},
+                {"type": "lineChart", "measure": "ADA Rate", "axis": "{dateColumn}", "position": "left-chart"},
+                {"type": "barChart", "measure": "Enrollment", "axis": "{campusColumn}", "position": "right-chart"}
+            ]
+        },
+        {
+            "name": "Campus Detail",
+            "description": "Drill-through page for individual campus metrics",
+            "visuals": [
+                {"type": "card", "kpi": "Total Enrollment", "position": "kpi-row"},
+                {"type": "card", "kpi": "ADA Rate", "position": "kpi-row"},
+                {"type": "card", "kpi": "Suspension Rate", "position": "kpi-row"},
+                {"type": "matrix", "rows": "{gradeColumn}", "values": ["ADA Rate", "Enrollment"], "position": "detail-table"}
+            ]
+        }
+    ]
+}

@@ -1,0 +1,134 @@
+{
+    "metadata": {
+        "name": "Operations / SRE KPI Pack",
+        "author": "hturbano",
+        "version": "1.0.0",
+        "description": "Operations and Site Reliability Engineering KPI templates for pipeline health, SLA monitoring, incident tracking, and system reliability."
+    },
+    "fieldMapping": {
+        "required": [
+            {
+                "name": "dateColumn",
+                "description": "Date or timestamp for time-based analysis",
+                "examples": ["Date", "RunDate", "Timestamp", "CreatedAt"],
+                "type": "date"
+            },
+            {
+                "name": "statusColumn",
+                "description": "Status of the job/run/incident",
+                "examples": ["Status", "State", "Result", "Outcome"],
+                "type": "text",
+                "validValues": ["Success", "Failed", "Running", "Cancelled", "Succeeded", "Error"]
+            }
+        ],
+        "optional": [
+            {
+                "name": "pipelineColumn",
+                "description": "Pipeline or job name for breakdown",
+                "examples": ["Pipeline", "JobName", "Workflow", "Service", "System"],
+                "type": "text"
+            },
+            {
+                "name": "durationColumn",
+                "description": "Duration of the run in seconds or minutes",
+                "examples": ["Duration", "DurationSeconds", "RunTime", "ElapsedTime"],
+                "type": "number"
+            },
+            {
+                "name": "slaTargetColumn",
+                "description": "SLA target duration",
+                "examples": ["SLATarget", "TargetDuration", "SLA"],
+                "type": "number"
+            },
+            {
+                "name": "errorCodeColumn",
+                "description": "Error code or category for failure analysis",
+                "examples": ["ErrorCode", "ErrorType", "FailureCategory"],
+                "type": "text"
+            }
+        ]
+    },
+    "kpis": [
+        {
+            "name": "Success Rate",
+            "description": "Percentage of successful job runs",
+            "baseExpression": "DIVIDE(COUNTROWS(FILTER(Runs, {statusColumn} IN {\"Success\", \"Succeeded\"})), COUNTROWS(Runs), 0)",
+            "format": "percentage",
+            "target": 0.99,
+            "conditionalFormat": {
+                "green": ">= 0.99",
+                "amber": ">= 0.95",
+                "red": "< 0.95"
+            },
+            "cardStyle": "large"
+        },
+        {
+            "name": "Avg Duration",
+            "description": "Average job duration in minutes",
+            "baseExpression": "AVERAGE({durationColumn})",
+            "format": "duration",
+            "trend": "MoM_Change",
+            "cardStyle": "standard"
+        },
+        {
+            "name": "SLA Compliance",
+            "description": "Percentage of jobs completing within SLA",
+            "baseExpression": "DIVIDE(COUNTROWS(FILTER(Runs, {durationColumn} <= {slaTargetColumn})), COUNTROWS(Runs), 0)",
+            "format": "percentage",
+            "target": 0.995,
+            "conditionalFormat": {
+                "green": ">= 0.995",
+                "amber": ">= 0.98",
+                "red": "< 0.98"
+            },
+            "cardStyle": "large"
+        },
+        {
+            "name": "Failed Runs (7d)",
+            "description": "Count of failed runs in the last 7 days",
+            "baseExpression": "COUNTROWS(FILTER(Runs, {statusColumn} IN {\"Failed\", \"Error\"} && {dateColumn} >= TODAY() - 7))",
+            "format": "wholeNumber",
+            "target": 0,
+            "conditionalFormat": {
+                "green": "= 0",
+                "amber": "<= 3",
+                "red": "> 3"
+            },
+            "cardStyle": "standard",
+            "lowerIsBetter": true
+        },
+        {
+            "name": "MTTR",
+            "description": "Mean Time to Recovery in minutes",
+            "baseExpression": "AVERAGE(FILTER(Incidents, [Resolved] = TRUE()), DATEDIFF([Detected], [Resolved], MINUTE))",
+            "format": "duration",
+            "target": 30,
+            "cardStyle": "standard",
+            "lowerIsBetter": true
+        },
+        {
+            "name": "Incidents (30d)",
+            "description": "Number of incidents in the last 30 days",
+            "baseExpression": "COUNTROWS(FILTER(Incidents, {dateColumn} >= TODAY() - 30))",
+            "format": "wholeNumber",
+            "target": 0,
+            "cardStyle": "standard",
+            "lowerIsBetter": true
+        }
+    ],
+    "layouts": [
+        {
+            "name": "Pipeline Health",
+            "description": "Real-time pipeline observability overview",
+            "visuals": [
+                {"type": "card", "kpi": "Success Rate", "position": "kpi-row-1"},
+                {"type": "card", "kpi": "SLA Compliance", "position": "kpi-row-1"},
+                {"type": "card", "kpi": "Failed Runs (7d)", "position": "kpi-row-1"},
+                {"type": "card", "kpi": "Avg Duration", "position": "kpi-row-1"},
+                {"type": "barChart", "measure": "Success Rate", "axis": "{pipelineColumn}", "position": "left-chart"},
+                {"type": "lineChart", "measure": "Avg Duration", "axis": "{dateColumn}", "position": "right-chart"},
+                {"type": "columnChart", "measure": "Run Count", "axis": "{dateColumn}", "series": "{statusColumn}", "position": "bottom-chart"}
+            ]
+        }
+    ]
+}

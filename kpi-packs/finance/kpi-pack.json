@@ -1,0 +1,119 @@
+{
+    "metadata": {
+        "name": "Finance KPI Pack",
+        "author": "hturbano",
+        "version": "1.0.0",
+        "description": "Finance-focused KPI templates for P&L, budget variance, cash flow, and financial performance metrics."
+    },
+    "fieldMapping": {
+        "required": [
+            {
+                "name": "dateColumn",
+                "description": "Date or period column for time-based analysis",
+                "examples": ["Date", "Period", "FiscalPeriod", "PostingDate"],
+                "type": "date"
+            },
+            {
+                "name": "amountColumn",
+                "description": "The monetary amount for the transaction or balance",
+                "examples": ["Amount", "Revenue", "Expense", "Balance"],
+                "type": "number"
+            }
+        ],
+        "optional": [
+            {
+                "name": "departmentColumn",
+                "description": "Department or cost center for breakdown",
+                "examples": ["Department", "CostCenter", "Division", "BusinessUnit"],
+                "type": "text"
+            },
+            {
+                "name": "categoryColumn",
+                "description": "Transaction category or account type",
+                "examples": ["Category", "AccountType", "GLAccount", "LineItem"],
+                "type": "text"
+            },
+            {
+                "name": "budgetColumn",
+                "description": "Budget amount for variance analysis",
+                "examples": ["Budget", "BudgetAmount", "PlanAmount", "Forecast"],
+                "type": "number"
+            }
+        ]
+    },
+    "kpis": [
+        {
+            "name": "Revenue",
+            "description": "Total revenue for the period",
+            "baseExpression": "SUM({amountColumn})",
+            "format": "currency",
+            "trend": "YoY_Change",
+            "cardStyle": "large"
+        },
+        {
+            "name": "Gross Margin",
+            "description": "Gross profit as a percentage of revenue",
+            "baseExpression": "DIVIDE(SUM(Revenue) - SUM(COGS), SUM(Revenue), 0)",
+            "format": "percentage",
+            "target": 0.40,
+            "conditionalFormat": {
+                "green": ">= 0.40",
+                "amber": ">= 0.30",
+                "red": "< 0.30"
+            },
+            "cardStyle": "large"
+        },
+        {
+            "name": "Operating Expenses",
+            "description": "Total operating expenses for the period",
+            "baseExpression": "SUM({amountColumn})",
+            "format": "currency",
+            "trend": "MoM_Change",
+            "cardStyle": "standard"
+        },
+        {
+            "name": "Budget Variance",
+            "description": "Variance between actual and budget as a percentage",
+            "baseExpression": "DIVIDE(SUM(Actual) - SUM({budgetColumn}), SUM({budgetColumn}), 0)",
+            "format": "percentage",
+            "target": 0,
+            "conditionalFormat": {
+                "green": "<= 0.05",
+                "amber": "<= 0.10",
+                "red": "> 0.10"
+            },
+            "cardStyle": "standard"
+        },
+        {
+            "name": "EBITDA",
+            "description": "Earnings before interest, taxes, depreciation, and amortization",
+            "baseExpression": "SUM(Revenue) - SUM(OpEx) + SUM(Depreciation)",
+            "format": "currency",
+            "trend": "YoY_Change",
+            "cardStyle": "standard"
+        },
+        {
+            "name": "Cash Runway",
+            "description": "Months of cash remaining at current burn rate",
+            "baseExpression": "DIVIDE(SUM(Cash), DIVIDE(SUM(OperatingExpenses), 12), 0)",
+            "format": "wholeNumber",
+            "target": 12,
+            "cardStyle": "standard"
+        }
+    ],
+    "layouts": [
+        {
+            "name": "P&L Dashboard",
+            "description": "Profit and loss overview with key financial metrics",
+            "visuals": [
+                {"type": "card", "kpi": "Revenue", "position": "kpi-row-1"},
+                {"type": "card", "kpi": "Gross Margin", "position": "kpi-row-1"},
+                {"type": "card", "kpi": "EBITDA", "position": "kpi-row-1"},
+                {"type": "card", "kpi": "Budget Variance", "position": "kpi-row-1"},
+                {"type": "waterfallChart", "measure": "Revenue", "breakdown": "{categoryColumn}", "position": "main-chart"},
+                {"type": "barChart", "measure": "Revenue", "axis": "{departmentColumn}", "position": "bottom-left"},
+                {"type": "lineChart", "measure": "Gross Margin", "axis": "{dateColumn}", "position": "bottom-right"}
+            ]
+        }
+    ]
+}

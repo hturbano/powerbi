@@ -1,0 +1,167 @@
+{
+    "name": "Modern Fintech",
+    "author": "hturbano",
+    "version": "2.0.0",
+    "description": "A modern fintech-grade theme inspired by Credit Karma and TurboTax — bold KPI cards, data-dense layouts, clean whitespace, and sharp visual hierarchy. This is the default theme for all new reports.",
+    "variant": "light",
+    "colors": {
+        "primary": "#0D1B2A",
+        "primaryLight": "#1E3A5F",
+        "accent": "#00C9A7",
+        "accentDark": "#00A68A",
+        "accentLight": "#E6FFF9",
+        "success": "#00C9A7",
+        "successDark": "#00A68A",
+        "successLight": "#E6FFF9",
+        "warning": "#FFB800",
+        "warningDark": "#E5A500",
+        "warningLight": "#FFF4CC",
+        "danger": "#FF4757",
+        "dangerDark": "#E03040",
+        "dangerLight": "#FFE3E6",
+        "info": "#45AAF2",
+        "infoDark": "#3A91D1",
+        "infoLight": "#E8F4FD",
+        "neutral": "#8395A7",
+        "neutralDark": "#576574",
+        "neutralLight": "#F0F3F5",
+        "background": "#F8F9FC",
+        "surface": "#FFFFFF",
+        "surfaceHover": "#F0F3F5",
+        "border": "#E2E8F0",
+        "borderLight": "#EDF2F7",
+        "text": "#0D1B2A",
+        "textSecondary": "#576574",
+        "textDisabled": "#A4B0BE",
+        "textOnDark": "#FFFFFF"
+    },
+    "typography": {
+        "fontFamily": "Inter",
+        "fallbackFontFamily": "Segoe UI, -apple-system, BlinkMacSystemFont, sans-serif",
+        "weights": {
+            "regular": 400,
+            "medium": 500,
+            "semibold": 600,
+            "bold": 700,
+            "extrabold": 800
+        },
+        "sizes": {
+            "hero": 48,
+            "title": 22,
+            "subtitle": 15,
+            "cardValue": 36,
+            "cardValueLarge": 48,
+            "cardLabel": 11,
+            "cardSublabel": 12,
+            "body": 14,
+            "bodySmall": 13,
+            "axisLabel": 11,
+            "legend": 11,
+            "tooltip": 12,
+            "button": 14,
+            "badge": 10
+        },
+        "letterSpacing": {
+            "tight": "-0.02em",
+            "normal": "0",
+            "wide": "0.05em"
+        }
+    },
+    "layout": {
+        "pageWidth": 1366,
+        "pageHeight": 768,
+        "margin": 24,
+        "marginLarge": 32,
+        "gutter": 16,
+        "gutterLarge": 24,
+        "sectionGap": 32,
+        "cardPadding": 20,
+        "cardPaddingLarge": 24,
+        "borderRadius": 12,
+        "borderRadiusSmall": 8,
+        "borderRadiusLarge": 16,
+        "borderRadiusPill": 9999
+    },
+    "shadows": {
+        "card": "0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.06)",
+        "cardHover": "0 4px 12px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.04)",
+        "dropdown": "0 10px 25px rgba(0, 0, 0, 0.1), 0 5px 10px rgba(0, 0, 0, 0.04)",
+        "modal": "0 20px 40px rgba(0, 0, 0, 0.15)"
+    },
+    "cards": {
+        "kpi": {
+            "background": "#FFFFFF",
+            "borderRadius": 12,
+            "padding": 20,
+            "shadow": "0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.06)",
+            "valueColor": "#0D1B2A",
+            "labelColor": "#576574",
+            "labelSize": 11,
+            "labelTransform": "uppercase",
+            "labelLetterSpacing": "0.05em",
+            "valueSize": 36,
+            "valueWeight": 700,
+            "trendUpColor": "#00C9A7",
+            "trendDownColor": "#FF4757",
+            "trendFlatColor": "#8395A7"
+        },
+        "chart": {
+            "background": "#FFFFFF",
+            "borderRadius": 12,
+            "padding": 20,
+            "shadow": "0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.06)",
+            "titleSize": 15,
+            "titleWeight": 600,
+            "titleColor": "#0D1B2A"
+        },
+        "table": {
+            "background": "#FFFFFF",
+            "borderRadius": 12,
+            "headerBackground": "#F8F9FC",
+            "headerTextColor": "#576574",
+            "headerSize": 11,
+            "headerTransform": "uppercase",
+            "headerWeight": 600,
+            "rowSize": 13,
+            "rowColor": "#0D1B2A",
+            "rowAltBackground": "#F8F9FC",
+            "borderColor": "#E2E8F0"
+        }
+    },
+    "visualDefaults": {
+        "barChart": {
+            "dataColors": ["#0D1B2A", "#00C9A7", "#45AAF2", "#FFB800", "#FF4757", "#8395A7"],
+            "axisColor": "#8395A7",
+            "gridlineColor": "#EDF2F7",
+            "labelColor": "#576574"
+        },
+        "lineChart": {
+            "dataColors": ["#00C9A7", "#0D1B2A", "#45AAF2", "#FFB800", "#FF4757"],
+            "axisColor": "#8395A7",
+            "gridlineColor": "#EDF2F7",
+            "labelColor": "#576574"
+        },
+        "donutChart": {
+            "dataColors": ["#00C9A7", "#0D1B2A", "#45AAF2", "#FFB800", "#FF4757", "#8395A7"]
+        },
+        "card": {
+            "backgroundColor": "#FFFFFF",
+            "borderRadius": 12,
+            "shadow": "0 1px 3px rgba(0, 0, 0, 0.04)"
+        },
+        "slicer": {
+            "backgroundColor": "#FFFFFF",
+            "borderColor": "#E2E8F0",
+            "textColor": "#0D1B2A",
+            "borderRadius": 8
+        }
+    },
+    "toggle": {
+        "enabled": true,
+        "lightTheme": "design-system/themes/modern-fintech.json",
+        "darkTheme": "design-system/themes/modern-fintech-dark.json",
+        "default": "light",
+        "toggleStyle": "pill",
+        "toggleLabel": "Theme"
+    }
+}
