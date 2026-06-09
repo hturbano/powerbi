@@ -45,7 +45,7 @@
             "expression": "DIVIDE([Base Measure] - [MoM], ABS([MoM]), 0)",
             "description": "Percentage change compared to the previous month."
         },
-        "Rolling_7_Day": {
+        " Rolling_7_Day": {
             "name": "7-Day Rolling Average",
             "expression": "AVERAGEX(DATESINPERIOD('Date'[Date], LASTDATE('Date'[Date]), -7, DAY), [Base Measure])",
             "description": "Average of the measure over the last 7 days."

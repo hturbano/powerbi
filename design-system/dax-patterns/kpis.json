@@ -1,0 +1,59 @@
+{
+    "metadata": {
+        "author": "hturbano",
+        "version": "1.0.0",
+        "description": "Reusable KPI and status DAX patterns for Power BI reports."
+    },
+    "patterns": {
+        "KPI_Status": {
+            "name": "KPI Status Indicator",
+            "expression": "VAR Actual = [Base Measure]\nVAR Target = [Target Measure]\nVAR PctOfTarget = DIVIDE(Actual, Target, 0)\nRETURN\n    SWITCH(\n        TRUE(),\n        PctOfTarget >= 1, \"On Track\",\n        PctOfTarget >= 0.9, \"At Risk\",\n        \"Off Track\"\n    )",
+            "description": "Returns On Track / At Risk / Off Track based on percentage of target achieved."
+        },
+        "KPI_Status_Color": {
+            "name": "KPI Status Color Code",
+            "expression": "VAR Actual = [Base Measure]\nVAR Target = [Target Measure]\nVAR PctOfTarget = DIVIDE(Actual, Target, 0)\nRETURN\n    SWITCH(\n        TRUE(),\n        PctOfTarget >= 1, \"#34A853\",\n        PctOfTarget >= 0.9, \"#FBBC04\",\n        \"#EA4335\"\n    )",
+            "description": "Returns hex color code for conditional formatting based on KPI status."
+        },
+        "KPI_Trend": {
+            "name": "KPI Trend Direction",
+            "expression": "VAR Current = [Base Measure]\nVAR Previous = [MoM]\nVAR Change = DIVIDE(Current - Previous, ABS(Previous), 0)\nRETURN\n    SWITCH(\n        TRUE(),\n        Change > 0.02, \"Up\",\n        Change < -0.02, \"Down\",\n        \"Flat\"\n    )",
+            "description": "Returns Up / Down / Flat based on month-over-month change."
+        },
+        "SLA_Compliance": {
+            "name": "SLA Compliance Check",
+            "expression": "IF([Avg Duration] <= [SLA Target], \"Met\", \"Breached\")",
+            "description": "Returns Met or Breached based on whether the average duration is within SLA."
+        },
+        "SLA_Compliance_Pct": {
+            "name": "SLA Compliance Percentage",
+            "expression": "DIVIDE(\n    COUNTROWS(FILTER('Jobs', [Status] = \"Success\" && [Duration] <= [SLA Target])),\n    COUNTROWS('Jobs'),\n    0\n)",
+            "description": "Percentage of jobs that completed within SLA."
+        },
+        "Success_Rate": {
+            "name": "Success Rate",
+            "expression": "DIVIDE(\n    COUNTROWS(FILTER('Jobs', [Status] = \"Success\")),\n    COUNTROWS('Jobs'),\n    0\n)",
+            "description": "Percentage of successful job runs."
+        },
+        "Failure_Rate": {
+            "name": "Failure Rate",
+            "expression": "DIVIDE(\n    COUNTROWS(FILTER('Jobs', [Status] = \"Failed\")),\n    COUNTROWS('Jobs'),\n    0\n)",
+            "description": "Percentage of failed job runs."
+        },
+        "Days_Since_Last_Run": {
+            "name": "Days Since Last Run",
+            "expression": "DATEDIFF(MAX('Jobs'[LastRunDate]), TODAY(), DAY)",
+            "description": "Number of days since the most recent job run."
+        },
+        "Pct_Change": {
+            "name": "Percentage Change",
+            "expression": "DIVIDE([Current Value] - [Previous Value], ABS([Previous Value]), 0)",
+            "description": "Generic percentage change between two values."
+        },
+        "Rank": {
+            "name": "Rank by Measure",
+            "expression": "RANKX(ALL('Table'[Category]), [Base Measure], , DESC, DENSE)",
+            "description": "Ranks categories by the specified measure in descending order."
+        }
+    }
+}

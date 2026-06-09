@@ -4,86 +4,104 @@ This document describes the Power BI design system encoded in this repository.
 
 ## Source
 
-The design system was extracted from a production .pbip report that contains multiple themes and visual configurations. All color values, typography settings, and layout specifications below are derived from that report's actual JSON definitions.
+The design system can be:
+- **Extracted from an existing .pbip file** via the onboarding flow (Path A)
+- **Built from scratch** via the interactive onboarding flow (Path B)  
+- **Installed from the default professional theme** (Path C)
+
+All themes are maintained by hturbano.
 
 ## Themes
 
 ### Corporate Theme
 - **File**: `design-system/themes/corporate.json`
 - **Use for**: All business-facing reports, executive dashboards, school/education reports
-- **Source**: Extracted from production .pbip
+- **Style**: Clean and professional with blue primary and semantic status colors
 
 ### Dark Mode Theme
 - **File**: `design-system/themes/dark-mode.json`
 - **Use for**: Engineering dashboards, data pipeline observability, operational reports
-- **Source**: Extracted from production .pbip
+- **Style**: Dark backgrounds with bright accents, optimized for reduced eye strain
 
-## Color Palette
-
-*Values to be extracted from the provided .pbip file.*
+## Color Palette (Corporate)
 
 | Token | Hex Value | Usage |
 |-------|-----------|-------|
-| primary | TBD | Headers, primary buttons, key metrics |
-| secondary | TBD | Secondary elements, borders, subtle UI |
-| accent | TBD | Highlights, call-to-action, selections |
-| success | TBD | Positive trends, passing KPIs, on-track |
-| warning | TBD | At-risk items, approaching thresholds |
-| danger | TBD | Failing KPIs, critical alerts, off-track |
-| neutral | TBD | Secondary text, dividers, disabled states |
-| background | TBD | Report canvas background |
-| surface | TBD | Card backgrounds, alternating rows |
+| primary | #1A73E8 | Headers, primary buttons, key metrics |
+| primaryDark | #1557B0 | Hover states, emphasis |
+| primaryLight | #E8F0FE | Backgrounds for primary elements |
+| secondary | #5F6368 | Secondary elements, borders |
+| accent | #F9AB00 | Highlights, call-to-action |
+| success | #34A853 | Positive trends, passing KPIs |
+| warning | #FBBC04 | At-risk items, approaching thresholds |
+| danger | #EA4335 | Failing KPIs, critical alerts |
+| neutral | #9AA0A6 | Secondary text, dividers |
+| background | #FFFFFF | Report canvas |
+| surface | #F8F9FA | Card backgrounds |
+| text | #202124 | Primary text |
+| textSecondary | #5F6368 | Secondary text |
 
 ## Typography
 
-*Values to be extracted from the provided .pbip file.*
-
 | Element | Font | Size (px) | Weight |
 |---------|------|-----------|--------|
-| Title | TBD | TBD | Bold |
-| Subtitle | TBD | TBD | Semibold |
-| Card Value | TBD | TBD | Bold |
-| Card Label | TBD | TBD | Regular |
-| Axis Labels | TBD | TBD | Regular |
-| Legend | TBD | TBD | Regular |
-| Tooltip | TBD | TBD | Regular |
+| Title | Segoe UI | 20 | Bold (700) |
+| Subtitle | Segoe UI | 14 | Semibold (600) |
+| Card Value | Segoe UI | 28 | Bold (700) |
+| Card Label | Segoe UI | 12 | Regular (400) |
+| Axis Labels | Segoe UI | 11 | Regular (400) |
+| Legend | Segoe UI | 11 | Regular (400) |
+
+## Layout Grid
+
+```
+Page Size:       1280 x 720
+Margins:         20px all sides
+Gutter:          16px between visual containers
+Card Padding:    12px internal
+Border Radius:   4px
+```
 
 ## Layout Templates
 
-### Dashboard 2-Column (`layouts/dashboard-2col.json`)
+### dashboard-2col
 - **Best for**: Executive dashboards, summary reports
-- **Structure**: KPI cards in top row (full width), two-column grid for charts below
-- **Page size**: 1280 x 720
+- **Structure**: KPI cards in top row (4 cards), two-column grid for charts below
 - **Max visuals**: 8-10
 
-### KPI Cards (`layouts/kpi-cards.json`)
+### kpi-cards
 - **Best for**: Scorecard views, status dashboards
 - **Structure**: Grid of card visuals with conditional formatting
-- **Page size**: 1280 x 720
 - **Max visuals**: 12-15 cards
 
-### Detail Page (`layouts/detail-page.json`)
+### detail-page
 - **Best for**: Drill-through pages, detailed analysis
-- **Structure**: Left panel for detail table, right panel for supporting charts
-- **Page size**: 1280 x 720
-- **Max visuals**: 4-6
+- **Structure**: Left panel (40%) for detail table, right panel (60%) for supporting charts
 
 ## DAX Patterns
 
-See `design-system/dax-patterns/` for reusable DAX measure definitions.
+### Time Intelligence (`design-system/dax-patterns/time-intelligence.json`)
+- YTD, MTD, QTD — Running totals
+- YoY, MoM — Period-over-period comparisons
+- Rolling 7-day, 30-day — Moving averages
+- Running Total — Cumulative sum
 
-### Time Intelligence
-- `time-intelligence.json` — YTD, MTD, QTD, YoY, MoM patterns
+### KPIs (`design-system/dax-patterns/kpis.json`)
+- KPI Status — On Track / At Risk / Off Track
+- KPI Status Color — Hex codes for conditional formatting
+- KPI Trend — Up / Down / Flat
+- SLA Compliance — Met / Breached
+- Success Rate / Failure Rate — Pipeline metrics
+- Rank — Category ranking by measure
 
-### KPIs
-- `kpis.json` — Standard KPI definitions with status calculations
+## How to Customize
 
-## How to Update
-
-To update the design system:
-
-1. Edit the .pbip file with your changes in Power BI Desktop
-2. Extract the relevant JSON sections (theme, visual configs, layout)
-3. Update the corresponding JSON files in `design-system/`
+1. Edit the theme JSON files in `design-system/themes/`
+2. Edit DAX patterns in `design-system/dax-patterns/`
+3. Edit layout templates in `design-system/layouts/`
 4. Update this documentation with new values
 5. Run `python scripts/validate-pbip.py examples/<report>` to verify
+
+## Author
+
+hturbano

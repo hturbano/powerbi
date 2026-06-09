@@ -7,7 +7,7 @@
     "layouts": {
         "dashboard-2col": {
             "name": "Dashboard 2-Column",
-            "description": "Standard executive dashboard with KPI cards on top and two-column chart layout below.",
+            "description": "Standard executive dashboard with KPI cards on top and two-column chart layout below. Best for summary views and high-level metrics.",
             "pageWidth": 1280,
             "pageHeight": 720,
             "margin": 20,
@@ -48,7 +48,7 @@
         },
         "kpi-cards": {
             "name": "KPI Cards",
-            "description": "Scorecard-style layout with a grid of KPI card visuals.",
+            "description": "Scorecard-style layout with a grid of KPI card visuals. Best for status dashboards and at-a-glance metrics.",
             "pageWidth": 1280,
             "pageHeight": 720,
             "margin": 20,
@@ -68,7 +68,7 @@
         },
         "detail-page": {
             "name": "Detail Page",
-            "description": "Drill-through detail page with a left panel for detail table and right panel for supporting visuals.",
+            "description": "Drill-through detail page with a left panel for detail table and right panel for supporting visuals. Best for deep-dive analysis.",
             "pageWidth": 1280,
             "pageHeight": 720,
             "margin": 20,
