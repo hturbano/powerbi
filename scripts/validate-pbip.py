@@ -20,6 +20,13 @@ import sys
 from pathlib import Path
 from typing import List, Tuple
 
+# Ensure Unicode status glyphs print on Windows consoles (cp1252) without crashing.
+try:
+    sys.stdout.reconfigure(encoding="utf-8")
+    sys.stderr.reconfigure(encoding="utf-8")
+except (AttributeError, ValueError):
+    pass
+
 # Invalid visual types that should be replaced
 INVALID_VISUAL_TYPES = {
     "stackedBarChart": "Use 'barChart' with stacked orientation",
@@ -32,14 +39,17 @@ REQUIRED_FIELDS = {
     "actionButton": ["howCreated"],
 }
 
-# Required files in a .pbip package
+# Required files. report.json is required in every PBIR report. [Content_Types].xml
+# only exists at the .pbip *package* root, NOT inside a ".Report" folder — so it is
+# checked conditionally (see check_required_files).
 REQUIRED_FILES = [
     "definition/report.json",
-    "[Content_Types].xml",
 ]
 
-# Current PBIR schema version
-CURRENT_SCHEMA_VERSION = "1.0"
+# Legacy schema versions that should be flagged as outdated. PBIR reports use
+# versions like "2.0.0" (version.json) and schema URLs at 3.x — those are current
+# and must NOT be flagged. Only pre-PBIR "1.x" report layouts are outdated.
+LEGACY_SCHEMA_VERSIONS = {"1.0", "1.0.0", "1.1", "1.2"}
 
 
 def find_json_files(directory: str) -> List[str]:
@@ -61,12 +71,27 @@ def check_required_files(directory: str) -> List[Tuple[str, str]]:
         full_path = os.path.join(directory, req_file)
         if not os.path.exists(full_path):
             issues.append(("ERROR", f"Missing required file: {req_file}"))
+
+    # [Content_Types].xml lives at the .pbip package root. When validating a bare
+    # ".Report" folder (what powerbi-report-mcp connects to), it legitimately won't
+    # be here — only warn if this looks like a package root rather than a .Report.
+    is_report_folder = os.path.basename(os.path.normpath(directory)).endswith(".Report")
+    if not is_report_folder and not os.path.exists(os.path.join(directory, "[Content_Types].xml")):
+        issues.append(("WARNING", "Missing [Content_Types].xml (expected at .pbip package root)"))
     return issues
+
+
+def is_theme_file(file_path: str) -> bool:
+    """Theme / static-resource files legitimately contain hex colors — that is where
+    colors are *defined*, so the hardcoded-color check must not flag them."""
+    norm = file_path.replace("\\", "/").lower()
+    return "staticresources" in norm or "/themes/" in norm or norm.endswith("theme.json")
 
 
 def check_visual_types(json_data: dict, file_path: str) -> List[Tuple[str, str]]:
     """Check for invalid visual types in report JSON."""
     issues = []
+    skip_color_check = is_theme_file(file_path)
 
     def traverse(obj, path=""):
         if isinstance(obj, dict):
@@ -87,9 +112,10 @@ def check_visual_types(json_data: dict, file_path: str) -> List[Tuple[str, str]]
                             f"[{file_path}] Visual type '{vtype}' missing required field '{field}' at {path}"
                         ))
 
-            # Check for hardcoded colors
+            # Check for hardcoded colors (skip theme/static-resource files)
             for key, value in obj.items():
-                if isinstance(value, str) and value.startswith("#") and len(value) == 7:
+                if (not skip_color_check and isinstance(value, str)
+                        and value.startswith("#") and len(value) == 7):
                     issues.append((
                         "WARNING",
                         f"[{file_path}] Possible hardcoded color '{value}' at {path}.{key}. Use theme reference instead."
@@ -106,13 +132,14 @@ def check_visual_types(json_data: dict, file_path: str) -> List[Tuple[str, str]]
 
 
 def check_schema_version(json_data: dict, file_path: str) -> List[Tuple[str, str]]:
-    """Check that the schema version is current."""
+    """Warn only for legacy (pre-PBIR) schema versions. Current PBIR versions
+    (2.x version.json, 3.x schema URLs) are valid and must not be flagged."""
     issues = []
     version = json_data.get("version", json_data.get("schemaVersion", ""))
-    if version and str(version) != CURRENT_SCHEMA_VERSION:
+    if version and str(version) in LEGACY_SCHEMA_VERSIONS:
         issues.append((
             "WARNING",
-            f"[{file_path}] Schema version '{version}' may be outdated. Current: {CURRENT_SCHEMA_VERSION}"
+            f"[{file_path}] Legacy schema version '{version}' detected. Upgrade to the current PBIR format."
         ))
     return issues
 

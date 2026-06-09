@@ -5,6 +5,11 @@
 # MCP server source (cloned by setup script, not part of this repo)
 .mcp-servers/
 
+# Generated MCP config (created by scripts/setup-mcp.sh — machine-specific paths)
+.mcp.json
+.cursor/
+.claude/settings.json
+
 # OS files
 .DS_Store
 Thumbs.db
