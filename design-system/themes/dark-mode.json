@@ -1,0 +1,26 @@
+{
+    "_comment": "Dark mode theme - extracted from production .pbip. Update DESIGN_SYSTEM.md when modifying.",
+    "name": "Dark Mode",
+    "colors": {
+        "primary": "TBD - extract from .pbip",
+        "secondary": "TBD - extract from .pbip",
+        "accent": "TBD - extract from .pbip",
+        "success": "#107C10",
+        "warning": "#FFB900",
+        "danger": "#D13438",
+        "neutral": "#A19F9D",
+        "background": "#1B1A19",
+        "surface": "#2D2C2B"
+    },
+    "typography": {
+        "fontFamily": "TBD - extract from .pbip",
+        "sizes": {
+            "title": "TBD",
+            "subtitle": "TBD",
+            "cardValue": "TBD",
+            "cardLabel": "TBD",
+            "axisLabel": "TBD",
+            "legend": "TBD"
+        }
+    }
+}

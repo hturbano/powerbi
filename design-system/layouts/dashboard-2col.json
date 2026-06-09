@@ -1,0 +1,32 @@
+{
+    "dashboard-2col": {
+        "name": "Dashboard 2-Column",
+        "description": "Standard executive dashboard with KPI cards on top and two-column chart layout below",
+        "pageSize": { "width": 1280, "height": 720 },
+        "margins": { "top": 20, "right": 20, "bottom": 20, "left": 20 },
+        "gutter": 16,
+        "structure": [
+            { "type": "row", "height": 120, "contents": "kpi-cards", "columns": 4 },
+            { "type": "row", "height": 280, "contents": "charts", "columns": 2 },
+            { "type": "row", "height": 280, "contents": "charts", "columns": 2 }
+        ]
+    },
+    "kpi-cards": {
+        "name": "KPI Cards",
+        "description": "Scorecard-style layout with grid of KPI card visuals",
+        "pageSize": { "width": 1280, "height": 720 },
+        "margins": { "top": 20, "right": 20, "bottom": 20, "left": 20 },
+        "gutter": 12,
+        "maxCards": 15,
+        "cardsPerRow": 5
+    },
+    "detail-page": {
+        "name": "Detail Page",
+        "description": "Drill-through detail page with left panel for detail table and right panel for supporting visuals",
+        "pageSize": { "width": 1280, "height": 720 },
+        "margins": { "top": 20, "right": 20, "bottom": 20, "left": 20 },
+        "splitRatio": 0.4,
+        "leftContents": "detail-table",
+        "rightContents": "supporting-charts"
+    }
+}

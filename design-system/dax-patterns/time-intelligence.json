@@ -1,0 +1,12 @@
+{
+    "timeIntelligence": {
+        "YTD": "TOTALYTD([Base Measure], 'Date'[Date])",
+        "MTD": "TOTALMTD([Base Measure], 'Date'[Date])",
+        "QTD": "TOTALQTD([Base Measure], 'Date'[Date])",
+        "YoY": "CALCULATE([Base Measure], SAMEPERIODLASTYEAR('Date'[Date]))",
+        "YoY_Change": "DIVIDE([Base Measure] - [YoY], [YoY], 0)",
+        "MoM": "CALCULATE([Base Measure], DATEADD('Date'[Date], -1, MONTH))",
+        "MoM_Change": "DIVIDE([Base Measure] - [MoM], [MoM], 0)"
+    },
+    "_comment": "Extracted from production .pbip. Add more patterns as discovered."
+}
