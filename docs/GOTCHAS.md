@@ -54,6 +54,44 @@ A comprehensive list of gotchas, quirks, and workarounds when using MCP tools to
 
 ## PBIP Structure Gotchas
 
+### Report Must Be in Enhanced PBIR Format (definition/ folder)
+
+**Problem**: `powerbi-report-mcp` only operates on the **enhanced PBIR** format — a
+`.Report` folder that contains a `definition/` subfolder (`definition/report.json`,
+`definition/pages/`, `definition/version.json`). Many existing `.pbip` files use the
+**legacy** format instead: a single `report.json` at the `.Report` root (with a
+`sections` array) plus a `definition.pbir` pointer and **no** `definition/` folder.
+Connecting to a legacy report fails with:
+
+```
+{"success": false, "error": "No .Report folder found at: ...DesignSystemsTemplate.Report"}
+```
+
+even though the folder clearly exists. The check is literally
+`endsWith(".Report") && existsSync(.Report/definition)`.
+
+**Fix**: Convert the report to enhanced PBIR in Power BI Desktop (one-time, per file):
+
+1. Open the `.pbip` in Power BI Desktop.
+2. **File → Options and settings → Options → Preview features →** enable
+   **"Store reports using enhanced metadata format (PBIR)"** → OK.
+3. Restart Power BI Desktop if prompted, reopen the `.pbip`.
+4. **Save** (`Ctrl+S`). Desktop rewrites the `.Report` into a `definition/` folder.
+
+You'll know it worked when a `definition/` folder appears inside `.Report` (with
+`pages/`, `report.json`, `version.json`) and the single root `report.json` is gone.
+
+> The conversion is one-way for that file. Back up the `.Report` folder first if you
+> may need the legacy layout later.
+
+### Close Power BI Desktop Before Editing on Disk
+
+**Problem**: If Power BI Desktop has the `.pbip` open while MCP tools write to disk,
+a subsequent Desktop save clobbers the MCP changes, and Desktop won't show the MCP
+changes until reloaded.
+**Fix**: Close Power BI Desktop before a batch of MCP edits, then reopen (or use
+`pbir_reload_report`) to view the result.
+
 ### PBIR vs TMSL
 
 **Problem**: Mixing report (PBIR) and model (TMSL) formats causes corruption.
@@ -79,7 +117,36 @@ A comprehensive list of gotchas, quirks, and workarounds when using MCP tools to
 ### Visual Positioning
 
 **Problem**: Visuals outside page bounds or overlapping cause issues.
-**Fix**: Use the layout grid from the design system.
+**Fix**: Use the layout grid from the design system. New visuals must clear the page
+banner zone — content starts at roughly `y >= 57` on a standard canvas, or
+`pbir_add_visual` rejects the placement with `layout_validation_failed` (pass
+`strictLayout: false` to proceed with warnings).
+
+### Data Bindings Require a `type`
+
+**Problem**: `pbir_add_visual` bindings fail validation with
+`expected: 'column' | 'measure' | 'aggregation'` when a field omits its kind.
+**Fix**: Every binding field needs `type`, e.g.
+`{ "entity": "EnrollmentMetrics", "property": "EnrolledTotal", "type": "measure" }`.
+
+## Known Tool Issues (observed)
+
+These are bugs in the underlying tools, not user error — listed so you can recognize
+them. Tracked for upstream fixes.
+
+### pbir_list_bookmarks can crash on some reports
+
+**Symptom**: `Cannot read properties of undefined (reading 'map')` when listing
+bookmarks on a report whose bookmark structure differs from what the tool expects.
+**Workaround**: Manage bookmarks in Power BI Desktop until fixed.
+
+### validate-pbip.py is noisy on real-world reports
+
+**Symptom**: Hundreds of warnings/errors on a mature report — every authored textbox
+color is flagged as a "hardcoded color," and `actionButton` visuals are flagged for a
+missing `howCreated` even when valid (the field nests differently in enhanced PBIR).
+**Workaround**: Treat these as informational on existing reports; focus the validator
+on newly generated pages. A structure-aware rewrite is needed for full accuracy.
 
 ## DAX Gotchas
 
