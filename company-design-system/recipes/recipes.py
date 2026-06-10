@@ -16,11 +16,11 @@ Recipe categories:
 
 Every run prints a JSON-validity check and a dangling-reference scan at the end.
 """
-import sys, os, json, argparse
+import os, json, argparse
 import lib
 from lib import (load, save, new_id, page_json, visual_files, resolve_page,
-                 lit, litcolor, vtype, objects, container, title_text, measure_ref,
-                 validate, scan_dangling, CHART_TYPES, TITLE_TYPES)
+                 lit, litcolor, vtype, objects, container, measure_ref,
+                 validate, scan_dangling, check_visual_schema, CHART_TYPES, TITLE_TYPES)
 
 SEMI = "'''Segoe UI Semibold'', wf_segoe-ui_semibold, helvetica, arial, sans-serif'"
 BOLD = "'''Segoe UI Bold'', wf_segoe-ui_bold, helvetica, arial, sans-serif'"
@@ -175,7 +175,7 @@ def brand_nav_header(report, page, **o):
     n = 0
     for el in tpl["elements"]:
         vid = new_id()
-        v = el["visual"]; v["name"] = vid
+        v = el["visual"]; v.pop("name", None)  # 'name' lives at top level only, not inside /visual
         p = el["position"]
         pos = {"x": round(p.get("x", 0) * scale), "y": p.get("y", 0),
                "width": round(p.get("width", 0) * scale), "height": p.get("height", 0),
@@ -288,10 +288,11 @@ def main():
     page = resolve_page(a.report, a.page)
     print("RESULT:", RECIPES[a.recipe](a.report, page, **opts))
 
-    bad = validate(a.report); dangle = scan_dangling(a.report)
+    bad = validate(a.report); dangle = scan_dangling(a.report); schema = check_visual_schema(a.report)
     print(f"validate: {'OK' if not bad else bad}")
     print(f"dangling refs: {len(dangle)}" + (f" {dangle}" if dangle else ""))
-    if bad or dangle:
+    print(f"schema check: {'OK' if not schema else schema}")
+    if bad or dangle or schema:
         raise SystemExit("WARNING: integrity check failed -- review before opening in Power BI")
 
 if __name__ == "__main__":

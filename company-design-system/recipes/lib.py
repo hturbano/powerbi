@@ -93,6 +93,19 @@ def validate(report):
             bad.append((f, str(e)))
     return bad
 
+def check_visual_schema(report):
+    """Catch common PBIR schema violations that JSON-parse fine but Power BI rejects.
+    Currently: a stray 'name' inside the /visual object (it belongs at top level only)."""
+    issues = []
+    import glob as _g
+    for f in _g.glob(os.path.join(pages_dir(report), "*", "visuals", "*", "visual.json")):
+        d = load(f)
+        if isinstance(d.get("visual"), dict) and "name" in d["visual"]:
+            issues.append((f, "'name' present inside /visual (move to top level)"))
+        if "name" not in d:
+            issues.append((f, "missing top-level 'name'"))
+    return issues
+
 def scan_dangling(report):
     """Return page visualInteractions that reference visuals not present on the page."""
     out = []
