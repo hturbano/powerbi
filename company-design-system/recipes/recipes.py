@@ -165,26 +165,51 @@ def wrap_in_panel(report, page, **o):
     save(os.path.join(dst, "visual.json"), shape)
     return f"added panel {vid} at ({x},{y},{w},{h})"
 
+VC_SCHEMA = "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json"
+
+def _write_visual(report, page, vid, pos, visual):
+    dst = os.path.join(lib.pages_dir(report), page, "visuals", vid)
+    os.makedirs(dst, exist_ok=True)
+    save(os.path.join(dst, "visual.json"), {"$schema": VC_SCHEMA, "name": vid, "position": pos, "visual": visual})
+
+def _pos(x, y, w, h, z):
+    return {"x": x, "y": y, "z": z, "width": w, "height": h, "tabOrder": z}
+
+def _shape(report, page, x, y, w, h, fill, border, z):
+    _write_visual(report, page, new_id(), _pos(x, y, w, h, z), {"visualType": "shape", "objects": {
+        "shape": [{"properties": {"tileShape": lit("'rectangle'")}}],
+        "fill": [{"properties": {"show": lit("true"), "fillColor": litcolor(fill)}, "selector": {"id": "default"}}],
+        "outline": [{"properties": {"show": lit("true"), "lineColor": litcolor(border), "weight": lit("1D")}}],
+    }, "drillFilterOtherVisuals": True})
+
+def _textbox(report, page, x, y, w, h, text, color, size, bold, align, z, bg=None, border=None):
+    style = {"fontWeight": "bold" if bold else "normal", "fontSize": f"{size}pt",
+             "color": color, "fontFamily": "Segoe UI"}
+    visual = {"visualType": "textbox", "objects": {"general": [{"properties": {"paragraphs": [
+        {"textRuns": [{"value": text, "textStyle": style}], "horizontalTextAlignment": align}]}}]}}
+    vco = {}
+    if bg: vco["background"] = [{"properties": {"show": lit("true"), "color": litcolor(bg)}}]
+    if border: vco["border"] = [{"properties": {"show": lit("true"), "color": litcolor(border), "radius": lit("6D")}}]
+    if vco: visual["visualContainerObjects"] = vco
+    _write_visual(report, page, new_id(), _pos(x, y, w, h, z), visual)
+
 def brand_nav_header(report, page, **o):
-    """[beta] Stamp the LOCUS nav band (bar + title + Support/Feature Request + filter toggle)
-    onto the page, scaled to the target page width. Repositioning/wiring the filter toggle
-    bookmark is a manual finish in Desktop."""
-    tpl = load(os.path.join(os.path.dirname(__file__), "..", "templates", "nav_header.json"))
-    pj = load(page_json(report, page)); tw = pj.get("width", 1280); sw = tpl.get("sourceWidth", 1792)
-    scale = tw / sw
-    n = 0
-    for el in tpl["elements"]:
-        vid = new_id()
-        v = el["visual"]; v.pop("name", None)  # 'name' lives at top level only, not inside /visual
-        p = el["position"]
-        pos = {"x": round(p.get("x", 0) * scale), "y": p.get("y", 0),
-               "width": round(p.get("width", 0) * scale), "height": p.get("height", 0),
-               "z": p.get("z", 1000), "tabOrder": p.get("tabOrder", 1000)}
-        dst = os.path.join(lib.pages_dir(report), page, "visuals", vid)
-        os.makedirs(dst, exist_ok=True)
-        save(os.path.join(dst, "visual.json"), {"$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json", "name": vid, "position": pos, "visual": v})
-        n += 1
-    return f"[beta] stamped {n} nav elements (review/reposition in Desktop)"
+    """Build a clean Company nav header: white bar + title + Support / Feature Request
+    buttons + a Filters toggle, sized to the page width. (The Filters toggle's show/hide
+    bookmark action is a manual wire-up in Desktop.)"""
+    title = o.get("title", "Dashboard Name")
+    accent = o.get("accent", "#0078BF")
+    W = load(page_json(report, page)).get("width", 1280)
+    z = 9000
+    # bar
+    _shape(report, page, 0, 0, W, 56, SURFACE, BORDER, z)
+    # title
+    _textbox(report, page, 20, 8, 600, 40, title, VALUE_NAVY, 20, True, "left", z + 1)
+    # buttons (right-aligned)
+    _textbox(report, page, W - 322, 12, 92, 32, "Support", accent, 11, False, "center", z + 1, bg=SURFACE, border=accent)
+    _textbox(report, page, W - 222, 12, 164, 32, "Feature Request", accent, 11, False, "center", z + 1, bg=SURFACE, border=accent)
+    _textbox(report, page, W - 46, 12, 34, 32, "▼", accent, 12, False, "center", z + 1, bg=SURFACE, border=BORDER)
+    return f"built clean nav header (title='{title}', width={W})"
 
 # ============================================================ ADDITIVE
 def card_label_fix(report, page, **o):
