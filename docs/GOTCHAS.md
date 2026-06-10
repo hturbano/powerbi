@@ -148,6 +148,23 @@ missing `howCreated` even when valid (the field nests differently in enhanced PB
 **Workaround**: Treat these as informational on existing reports; focus the validator
 on newly generated pages. A structure-aware rewrite is needed for full accuracy.
 
+### pbir_duplicate_page leaves dangling visualInteractions (crashes the report)
+
+**Symptom**: After duplicating a page, opening the report throws
+`Serializer.serializeRelationship … Cannot read properties of undefined (reading 'name')`
+and renders layout-only. The duplicate regenerates visual ids but leaves the page's
+`visualInteractions` pointing at the **source page's** ids.
+**Fix**: After duplicating, remap each interaction's `source`/`target` to the new ids
+(match visuals by type+position), or strip `visualInteractions` entirely. Scan with a
+dangling-reference check before opening (see `company-design-system/recipes/lib.py:scan_dangling`).
+
+### cardVisual value/label formatting is ignored without a selector
+
+**Symptom**: Setting `value`/`label` properties on a `cardVisual` (e.g. `label.position`)
+does nothing — Power BI falls back to defaults (label below value → clips in short cards).
+**Fix**: Each property needs a `selector` matching the field's queryRef, e.g.
+`"selector": {"metadata": "_Measures.Total Students Enrolled"}`.
+
 ## DAX Gotchas
 
 ### DIVIDE vs / Operator

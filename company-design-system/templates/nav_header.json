@@ -1,0 +1,3573 @@
+{
+ "sourceWidth": 1792,
+ "elements": [
+  {
+   "visualType": "image",
+   "position": {
+    "x": 89,
+    "y": 0,
+    "width": 18,
+    "height": 18,
+    "z": 2000,
+    "tabOrder": 2000
+   },
+   "visual": {
+    "visualType": "image",
+    "objects": {
+     "general": [
+      {
+       "properties": {
+        "imageUrl": {
+         "expr": {
+          "ResourcePackageItem": {
+           "PackageName": "RegisteredResources",
+           "PackageType": 1,
+           "ItemName": "calendar-check6116662046289504.png"
+          }
+         }
+        }
+       }
+      }
+     ]
+    },
+    "visualContainerObjects": {
+     "title": [
+      {
+       "properties": {
+        "titleWrap": {
+         "expr": {
+          "Literal": {
+           "Value": "true"
+          }
+         }
+        },
+        "text": {
+         "expr": {
+          "Literal": {
+           "Value": "'Import Icon'"
+          }
+         }
+        }
+       }
+      }
+     ],
+     "background": [
+      {
+       "properties": {
+        "show": {
+         "expr": {
+          "Literal": {
+           "Value": "false"
+          }
+         }
+        },
+        "transparency": {
+         "expr": {
+          "Literal": {
+           "Value": "0D"
+          }
+         }
+        }
+       }
+      }
+     ],
+     "padding": [
+      {
+       "properties": {
+        "top": {
+         "expr": {
+          "Literal": {
+           "Value": "0D"
+          }
+         }
+        },
+        "bottom": {
+         "expr": {
+          "Literal": {
+           "Value": "0D"
+          }
+         }
+        },
+        "left": {
+         "expr": {
+          "Literal": {
+           "Value": "0D"
+          }
+         }
+        },
+        "right": {
+         "expr": {
+          "Literal": {
+           "Value": "0D"
+          }
+         }
+        }
+       }
+      }
+     ],
+     "lockAspect": [
+      {
+       "properties": {
+        "show": {
+         "expr": {
+          "Literal": {
+           "Value": "true"
+          }
+         }
+        }
+       }
+      }
+     ],
+     "general": [
+      {
+       "properties": {
+        "keepLayerOrder": {
+         "expr": {
+          "Literal": {
+           "Value": "true"
+          }
+         }
+        }
+       }
+      }
+     ],
+     "border": [
+      {
+       "properties": {
+        "width": {
+         "expr": {
+          "Literal": {
+           "Value": "1D"
+          }
+         }
+        }
+       }
+      }
+     ],
+     "visualHeader": [
+      {
+       "properties": {
+        "show": {
+         "expr": {
+          "Literal": {
+           "Value": "false"
+          }
+         }
+        }
+       }
+      }
+     ]
+    },
+    "drillFilterOtherVisuals": true
+   }
+  },
+  {
+   "visualType": "shape",
+   "position": {
+    "x": 155.9493670886076,
+    "y": 0,
+    "width": 22.27848101265823,
+    "height": 64,
+    "z": 8000,
+    "tabOrder": 7000
+   },
+   "visual": {
+    "visualType": "shape",
+    "objects": {
+     "shape": [
+      {
+       "properties": {
+        "tileShape": {
+         "expr": {
+          "Literal": {
+           "Value": "'line'"
+          }
+         }
+        }
+       }
+      }
+     ],
+     "rotation": [
+      {
+       "properties": {
+        "shapeAngle": {
+         "expr": {
+          "Literal": {
+           "Value": "90L"
+          }
+         }
+        }
+       }
+      }
+     ],
+     "outline": [
+      {
+       "properties": {
+        "weight": {
+         "expr": {
+          "Literal": {
+           "Value": "0.5D"
+          }
+         }
+        },
+        "lineColor": {
+         "solid": {
+          "color": {
+           "expr": {
+            "Literal": {
+             "Value": "'#DDE6EE'"
+            }
+           }
+          }
+         }
+        }
+       },
+       "selector": {
+        "id": "default"
+       }
+      }
+     ],
+     "fill": [
+      {
+       "properties": {
+        "show": {
+         "expr": {
+          "Literal": {
+           "Value": "false"
+          }
+         }
+        }
+       }
+      }
+     ]
+    },
+    "visualContainerObjects": {
+     "title": [
+      {
+       "properties": {
+        "text": {
+         "expr": {
+          "Literal": {
+           "Value": "'Divider'"
+          }
+         }
+        }
+       }
+      }
+     ]
+    },
+    "drillFilterOtherVisuals": true
+   }
+  },
+  {
+   "visualType": "actionButton",
+   "position": {
+    "x": 1478.73417721519,
+    "y": 0,
+    "width": 66.83544303797468,
+    "height": 63.999999999999986,
+    "z": 5000,
+    "tabOrder": 3000
+   },
+   "visual": {
+    "visualType": "actionButton",
+    "objects": {
+     "icon": [
+      {
+       "properties": {
+        "shapeType": {
+         "expr": {
+          "Literal": {
+           "Value": "'custom'"
+          }
+         }
+        },
+        "image": {
+         "image": {
+          "name": {
+           "expr": {
+            "Literal": {
+             "Value": "'funnel-default.svg'"
+            }
+           }
+          },
+          "url": {
+           "expr": {
+            "ResourcePackageItem": {
+             "PackageName": "RegisteredResources",
+             "PackageType": 1,
+             "ItemName": "funnel-default022651672025713165.svg"
+            }
+           }
+          },
+          "scaling": {
+           "expr": {
+            "Literal": {
+             "Value": "'Normal'"
+            }
+           }
+          }
+         }
+        },
+        "topMargin": {
+         "expr": {
+          "Literal": {
+           "Value": "12L"
+          }
+         }
+        },
+        "bottomMargin": {
+         "expr": {
+          "Literal": {
+           "Value": "12L"
+          }
+         }
+        },
+        "leftMargin": {
+         "expr": {
+          "Literal": {
+           "Value": "12L"
+          }
+         }
+        },
+        "rightMargin": {
+         "expr": {
+          "Literal": {
+           "Value": "12L"
+          }
+         }
+        }
+       },
+       "selector": {
+        "id": "default"
+       }
+      },
+      {
+       "properties": {
+        "shapeType": {
+         "expr": {
+          "Literal": {
+           "Value": "'custom'"
+          }
+         }
+        },
+        "image": {
+         "image": {
+          "name": {
+           "expr": {
+            "Literal": {
+             "Value": "'funnel-hover.svg'"
+            }
+           }
+          },
+          "url": {
+           "expr": {
+            "ResourcePackageItem": {
+             "PackageName": "RegisteredResources",
+             "PackageType": 1,
+             "ItemName": "funnel-hover14901106927970653.svg"
+            }
+           }
+          },
+          "scaling": {
+           "expr": {
+            "Literal": {
+             "Value": "'Normal'"
+            }
+           }
+          }
+         }
+        }
+       },
+       "selector": {
+        "id": "hover"
+       }
+      },
+      {
+       "properties": {
+        "show": {
+         "expr": {
+          "Literal": {
+           "Value": "true"
+          }
+         }
+        }
+       }
+      },
+      {
+       "properties": {
+        "image": {
+         "image": {
+          "name": {
+           "expr": {
+            "Literal": {
+             "Value": "'funnel-hover.svg'"
+            }
+           }
+          },
+          "url": {
+           "expr": {
+            "ResourcePackageItem": {
+             "PackageName": "RegisteredResources",
+             "PackageType": 1,
+             "ItemName": "funnel-hover6864454290707227.svg"
+            }
+           }
+          },
+          "scaling": {
+           "expr": {
+            "Literal": {
+             "Value": "'Normal'"
+            }
+           }
+          }
+         }
+        }
+       },
+       "selector": {
+        "id": "selected"
+       }
+      },
+      {
+       "properties": {
+        "image": {
+         "image": {
+          "name": {
+           "expr": {
+            "Literal": {
+             "Value": "'funnel-default.svg'"
+            }
+           }
+          },
+          "url": {
+           "expr": {
+            "ResourcePackageItem": {
+             "PackageName": "RegisteredResources",
+             "PackageType": 1,
+             "ItemName": "funnel-default40056082667541515.svg"
+            }
+           }
+          },
+          "scaling": {
+           "expr": {
+            "Literal": {
+             "Value": "'Normal'"
+            }
+           }
+          }
+         }
+        }
+       },
+       "selector": {
+        "id": "disabled"
+       }
+      }
+     ],
+     "outline": [
+      {
+       "properties": {
+        "show": {
+         "expr": {
+          "Literal": {
+           "Value": "false"
+          }
+         }
+        }
+       }
+      }
+     ],
+     "shape": [
+      {
+       "properties": {
+        "roundEdge": {
+         "expr": {
+          "Literal": {
+           "Value": "0L"
+          }
+         }
+        }
+       },
+       "selector": {
+        "id": "default"
+       }
+      }
+     ],
+     "text": [
+      {
+       "properties": {
+        "show": {
+         "expr": {
+          "Literal": {
+           "Value": "false"
+          }
+         }
+        }
+       }
+      },
+      {
+       "properties": {
+        "text": {
+         "expr": {
+          "Literal": {
+           "Value": "''"
+          }
+         }
+        }
+       },
+       "selector": {
+        "id": "hover"
+       }
+      }
+     ],
+     "fill": [
+      {
+       "properties": {
+        "show": {
+         "expr": {
+          "Literal": {
+           "Value": "true"
+          }
+         }
+        }
+       }
+      },
+      {
+       "properties": {
+        "transparency": {
+         "expr": {
+          "Literal": {
+           "Value": "0D"
+          }
+         }
+        }
+       },
+       "selector": {
+        "id": "default"
+       }
+      },
+      {
+       "properties": {
+        "fillColor": {
+         "solid": {
+          "color": {
+           "expr": {
+            "Literal": {
+             "Value": "'#EDF3F8'"
+            }
+           }
+          }
+         }
+        }
+       },
+       "selector": {
+        "id": "hover"
+       }
+      }
+     ]
+    },
+    "visualContainerObjects": {
+     "visualLink": [
+      {
+       "properties": {
+        "show": {
+         "expr": {
+          "Literal": {
+           "Value": "true"
+          }
+         }
+        },
+        "type": {
+         "expr": {
+          "Literal": {
+           "Value": "'Bookmark'"
+          }
+         }
+        },
+        "bookmark": {
+         "expr": {
+          "Literal": {
+           "Value": "'004b4672f8ee3b9740f1'"
+          }
+         }
+        },
+        "tooltip": {
+         "expr": {
+          "Literal": {
+           "Value": "'Click here to apply filters'"
+          }
+         }
+        }
+       }
+      }
+     ],
+     "title": [
+      {
+       "properties": {
+        "text": {
+         "expr": {
+          "Literal": {
+           "Value": "'FilterButton'"
+          }
+         }
+        }
+       }
+      }
+     ]
+    },
+    "drillFilterOtherVisuals": true
+   }
+  },
+  {
+   "visualType": "textbox",
+   "position": {
+    "x": 27.42428800482601,
+    "y": 0,
+    "width": 68.99110998221997,
+    "height": 28.657365629882776,
+    "z": 1000,
+    "tabOrder": 0
+   },
+   "visual": {
+    "visualType": "textbox",
+    "objects": {
+     "general": [
+      {
+       "properties": {
+        "paragraphs": [
+         {
+          "textRuns": [
+           {
+            "value": "Filters",
+            "textStyle": {
+             "fontWeight": "bold",
+             "color": "#314259"
+            }
+           }
+          ]
+         }
+        ]
+       }
+      }
+     ]
+    },
+    "visualContainerObjects": {
+     "background": [
+      {
+       "properties": {
+        "show": {
+         "expr": {
+          "Literal": {
+           "Value": "false"
+          }
+         }
+        }
+       }
+      }
+     ]
+    },
+    "drillFilterOtherVisuals": true
+   }
+  },
+  {
+   "visualType": "textbox",
+   "position": {
+    "x": 90,
+    "y": 0,
+    "width": 94,
+    "height": 20,
+    "z": 1000,
+    "tabOrder": 0
+   },
+   "visual": {
+    "visualType": "textbox",
+    "objects": {
+     "general": [
+      {
+       "properties": {
+        "paragraphs": [
+         {
+          "textRuns": [
+           {
+            "value": "2024-2025",
+            "textStyle": {
+             "fontWeight": "bold",
+             "fontSize": "11pt",
+             "textDecoration": "underline",
+             "color": "#045ea8"
+            }
+           }
+          ]
+         }
+        ]
+       }
+      }
+     ]
+    },
+    "visualContainerObjects": {
+     "padding": [
+      {
+       "properties": {
+        "top": {
+         "expr": {
+          "Literal": {
+           "Value": "0D"
+          }
+         }
+        },
+        "bottom": {
+         "expr": {
+          "Literal": {
+           "Value": "0D"
+          }
+         }
+        },
+        "left": {
+         "expr": {
+          "Literal": {
+           "Value": "5D"
+          }
+         }
+        },
+        "right": {
+         "expr": {
+          "Literal": {
+           "Value": "0D"
+          }
+         }
+        }
+       }
+      }
+     ],
+     "background": [
+      {
+       "properties": {
+        "transparency": {
+         "expr": {
+          "Literal": {
+           "Value": "100D"
+          }
+         }
+        }
+       }
+      }
+     ]
+    },
+    "drillFilterOtherVisuals": true
+   }
+  },
+  {
+   "visualType": "textbox",
+   "position": {
+    "x": 178.22784810126583,
+    "y": 0,
+    "width": 957.9746835443038,
+    "height": 64,
+    "z": 10000,
+    "tabOrder": 8000
+   },
+   "visual": {
+    "visualType": "textbox",
+    "objects": {
+     "general": [
+      {
+       "properties": {
+        "paragraphs": [
+         {
+          "textRuns": [
+           {
+            "value": "Dashboard Name",
+            "textStyle": {
+             "fontWeight": "bold",
+             "fontSize": "14pt",
+             "color": "#0078bf"
+            }
+           }
+          ]
+         },
+         {
+          "textRuns": [
+           {
+            "value": "View",
+            "textStyle": {
+             "fontSize": "11pt",
+             "color": "#607890"
+            }
+           }
+          ]
+         }
+        ]
+       }
+      }
+     ]
+    },
+    "visualContainerObjects": {
+     "background": [
+      {
+       "properties": {
+        "show": {
+         "expr": {
+          "Literal": {
+           "Value": "false"
+          }
+         }
+        }
+       }
+      }
+     ],
+     "dropShadow": [
+      {
+       "properties": {
+        "show": {
+         "expr": {
+          "Literal": {
+           "Value": "false"
+          }
+         }
+        },
+        "preset": {
+         "expr": {
+          "Literal": {
+           "Value": "'CenterLeft'"
+          }
+         }
+        },
+        "angle": {
+         "expr": {
+          "Literal": {
+           "Value": "180L"
+          }
+         }
+        },
+        "shadowDistance": {
+         "expr": {
+          "Literal": {
+           "Value": "10L"
+          }
+         }
+        },
+        "shadowBlur": {
+         "expr": {
+          "Literal": {
+           "Value": "10L"
+          }
+         }
+        },
+        "shadowSpread": {
+         "expr": {
+          "Literal": {
+           "Value": "3L"
+          }
+         }
+        },
+        "transparency": {
+         "expr": {
+          "Literal": {
+           "Value": "70L"
+          }
+         }
+        },
+        "color": {
+         "solid": {
+          "color": {
+           "expr": {
+            "Literal": {
+             "Value": "'#e6e6e6'"
+            }
+           }
+          }
+         }
+        }
+       }
+      }
+     ],
+     "title": [
+      {
+       "properties": {
+        "text": {
+         "expr": {
+          "Literal": {
+           "Value": "'Dashboard Title'"
+          }
+         }
+        }
+       }
+      }
+     ]
+    },
+    "drillFilterOtherVisuals": true
+   }
+  },
+  {
+   "visualType": "actionButton",
+   "position": {
+    "x": 1548.3544303797469,
+    "y": 0,
+    "width": 211.64556962025318,
+    "height": 63.999999999999986,
+    "z": 2000,
+    "tabOrder": 0
+   },
+   "visual": {
+    "visualType": "actionButton",
+    "objects": {
+     "icon": [
+      {
+       "properties": {
+        "shapeType": {
+         "expr": {
+          "Literal": {
+           "Value": "'custom'"
+          }
+         }
+        },
+        "placement": {
+         "expr": {
+          "Literal": {
+           "Value": "'custom'"
+          }
+         }
+        },
+        "image": {
+         "image": {
+          "name": {
+           "expr": {
+            "Literal": {
+             "Value": "'chevron-down.svg'"
+            }
+           }
+          },
+          "url": {
+           "expr": {
+            "ResourcePackageItem": {
+             "PackageName": "RegisteredResources",
+             "PackageType": 1,
+             "ItemName": "chevron-down8767338669004039.svg"
+            }
+           }
+          },
+          "scaling": {
+           "expr": {
+            "Literal": {
+             "Value": "'Fit'"
+            }
+           }
+          }
+         }
+        },
+        "topMargin": {
+         "expr": {
+          "Literal": {
+           "Value": "20L"
+          }
+         }
+        },
+        "bottomMargin": {
+         "expr": {
+          "Literal": {
+           "Value": "17L"
+          }
+         }
+        },
+        "leftMargin": {
+         "expr": {
+          "Literal": {
+           "Value": "16L"
+          }
+         }
+        },
+        "rightMargin": {
+         "expr": {
+          "Literal": {
+           "Value": "32L"
+          }
+         }
+        },
+        "horizontalAlignment": {
+         "expr": {
+          "Literal": {
+           "Value": "'right'"
+          }
+         }
+        }
+       },
+       "selector": {
+        "id": "default"
+       }
+      },
+      {
+       "properties": {
+        "show": {
+         "expr": {
+          "Literal": {
+           "Value": "true"
+          }
+         }
+        }
+       }
+      }
+     ],
+     "text": [
+      {
+       "properties": {
+        "show": {
+         "expr": {
+          "Literal": {
+           "Value": "true"
+          }
+         }
+        }
+       }
+      },
+      {
+       "properties": {
+        "text": {
+         "expr": {
+          "Literal": {
+           "Value": "'Organization'"
+          }
+         }
+        },
+        "fontColor": {
+         "solid": {
+          "color": {
+           "expr": {
+            "Literal": {
+             "Value": "'#44566F'"
+            }
+           }
+          }
+         }
+        },
+        "fontFamily": {
+         "expr": {
+          "Literal": {
+           "Value": "'''Segoe UI'', wf_segoe-ui_normal, helvetica, arial, sans-serif'"
+          }
+         }
+        },
+        "horizontalAlignment": {
+         "expr": {
+          "Literal": {
+           "Value": "'left'"
+          }
+         }
+        },
+        "leftMargin": {
+         "expr": {
+          "Literal": {
+           "Value": "24L"
+          }
+         }
+        },
+        "bottomMargin": {
+         "expr": {
+          "Literal": {
+           "Value": "7L"
+          }
+         }
+        },
+        "fontSize": {
+         "expr": {
+          "Literal": {
+           "Value": "12D"
+          }
+         }
+        },
+        "topMargin": {
+         "expr": {
+          "Literal": {
+           "Value": "3L"
+          }
+         }
+        }
+       },
+       "selector": {
+        "id": "default"
+       }
+      },
+      {
+       "properties": {
+        "fontColor": {
+         "solid": {
+          "color": {
+           "expr": {
+            "Literal": {
+             "Value": "'#314259'"
+            }
+           }
+          }
+         }
+        }
+       },
+       "selector": {
+        "id": "hover"
+       }
+      }
+     ],
+     "outline": [
+      {
+       "properties": {
+        "show": {
+         "expr": {
+          "Literal": {
+           "Value": "false"
+          }
+         }
+        }
+       }
+      },
+      {
+       "properties": {
+        "lineColor": {
+         "solid": {
+          "color": {
+           "expr": {
+            "ThemeDataColor": {
+             "ColorId": 0,
+             "Percent": 0
+            }
+           }
+          }
+         }
+        },
+        "weight": {
+         "expr": {
+          "Literal": {
+           "Value": "1D"
+          }
+         }
+        }
+       },
+       "selector": {
+        "id": "default"
+       }
+      },
+      {
+       "properties": {
+        "lineColor": {
+         "solid": {
+          "color": {
+           "expr": {
+            "ThemeDataColor": {
+             "ColorId": 0,
+             "Percent": 0
+            }
+           }
+          }
+         }
+        }
+       },
+       "selector": {
+        "id": "hover"
+       }
+      }
+     ],
+     "shape": [
+      {
+       "properties": {
+        "roundEdge": {
+         "expr": {
+          "Literal": {
+           "Value": "0L"
+          }
+         }
+        }
+       },
+       "selector": {
+        "id": "default"
+       }
+      }
+     ],
+     "fill": [
+      {
+       "properties": {
+        "show": {
+         "expr": {
+          "Literal": {
+           "Value": "true"
+          }
+         }
+        }
+       }
+      },
+      {
+       "properties": {
+        "fillColor": {
+         "solid": {
+          "color": {
+           "expr": {
+            "ThemeDataColor": {
+             "ColorId": 0,
+             "Percent": 0
+            }
+           }
+          }
+         }
+        },
+        "transparency": {
+         "expr": {
+          "Literal": {
+           "Value": "0D"
+          }
+         }
+        }
+       },
+       "selector": {
+        "id": "default"
+       }
+      },
+      {
+       "properties": {
+        "fillColor": {
+         "solid": {
+          "color": {
+           "expr": {
+            "Literal": {
+             "Value": "'#EDF3F8'"
+            }
+           }
+          }
+         }
+        }
+       },
+       "selector": {
+        "id": "hover"
+       }
+      }
+     ]
+    },
+    "visualContainerObjects": {
+     "background": [
+      {
+       "properties": {
+        "show": {
+         "expr": {
+          "Literal": {
+           "Value": "false"
+          }
+         }
+        },
+        "color": {
+         "solid": {
+          "color": {
+           "expr": {
+            "Literal": {
+             "Value": "'#0078BF'"
+            }
+           }
+          }
+         }
+        }
+       }
+      }
+     ],
+     "title": [
+      {
+       "properties": {
+        "text": {
+         "expr": {
+          "Literal": {
+           "Value": "'Org Area Select'"
+          }
+         }
+        }
+       }
+      }
+     ],
+     "visualLink": [
+      {
+       "properties": {
+        "show": {
+         "expr": {
+          "Literal": {
+           "Value": "true"
+          }
+         }
+        },
+        "type": {
+         "expr": {
+          "Literal": {
+           "Value": "'Bookmark'"
+          }
+         }
+        },
+        "bookmark": {
+         "expr": {
+          "Literal": {
+           "Value": "'df5da1c91cd996507c00'"
+          }
+         }
+        },
+        "showDefaultTooltip": {
+         "expr": {
+          "Literal": {
+           "Value": "false"
+          }
+         }
+        }
+       }
+      }
+     ]
+    },
+    "drillFilterOtherVisuals": true
+   }
+  },
+  {
+   "visualType": "actionButton",
+   "position": {
+    "x": 1478.73417721519,
+    "y": 0,
+    "width": 66.83544303797468,
+    "height": 63.999999999999986,
+    "z": 4000,
+    "tabOrder": 1000
+   },
+   "visual": {
+    "visualType": "actionButton",
+    "objects": {
+     "icon": [
+      {
+       "properties": {
+        "shapeType": {
+         "expr": {
+          "Literal": {
+           "Value": "'custom'"
+          }
+         }
+        },
+        "image": {
+         "image": {
+          "name": {
+           "expr": {
+            "Literal": {
+             "Value": "'funnel-selected.svg'"
+            }
+           }
+          },
+          "url": {
+           "expr": {
+            "ResourcePackageItem": {
+             "PackageName": "RegisteredResources",
+             "PackageType": 1,
+             "ItemName": "funnel-selected7345550763325074.svg"
+            }
+           }
+          },
+          "scaling": {
+           "expr": {
+            "Literal": {
+             "Value": "'Normal'"
+            }
+           }
+          }
+         }
+        },
+        "topMargin": {
+         "expr": {
+          "Literal": {
+           "Value": "12L"
+          }
+         }
+        },
+        "bottomMargin": {
+         "expr": {
+          "Literal": {
+           "Value": "12L"
+          }
+         }
+        },
+        "leftMargin": {
+         "expr": {
+          "Literal": {
+           "Value": "12L"
+          }
+         }
+        },
+        "rightMargin": {
+         "expr": {
+          "Literal": {
+           "Value": "12L"
+          }
+         }
+        }
+       },
+       "selector": {
+        "id": "default"
+       }
+      },
+      {
+       "properties": {
+        "shapeType": {
+         "expr": {
+          "Literal": {
+           "Value": "'custom'"
+          }
+         }
+        },
+        "image": {
+         "image": {
+          "name": {
+           "expr": {
+            "Literal": {
+             "Value": "'funnel-close-hover.svg'"
+            }
+           }
+          },
+          "url": {
+           "expr": {
+            "ResourcePackageItem": {
+             "PackageName": "RegisteredResources",
+             "PackageType": 1,
+             "ItemName": "funnel-close-hover2052322633417657.svg"
+            }
+           }
+          },
+          "scaling": {
+           "expr": {
+            "Literal": {
+             "Value": "'Normal'"
+            }
+           }
+          }
+         }
+        }
+       },
+       "selector": {
+        "id": "hover"
+       }
+      },
+      {
+       "properties": {
+        "show": {
+         "expr": {
+          "Literal": {
+           "Value": "true"
+          }
+         }
+        }
+       }
+      },
+      {
+       "properties": {
+        "image": {
+         "image": {
+          "name": {
+           "expr": {
+            "Literal": {
+             "Value": "'funnel-close-hover.svg'"
+            }
+           }
+          },
+          "url": {
+           "expr": {
+            "ResourcePackageItem": {
+             "PackageName": "RegisteredResources",
+             "PackageType": 1,
+             "ItemName": "funnel-close-hover7187785860215578.svg"
+            }
+           }
+          },
+          "scaling": {
+           "expr": {
+            "Literal": {
+             "Value": "'Normal'"
+            }
+           }
+          }
+         }
+        }
+       },
+       "selector": {
+        "id": "selected"
+       }
+      },
+      {
+       "properties": {
+        "image": {
+         "image": {
+          "name": {
+           "expr": {
+            "Literal": {
+             "Value": "'funnel-selected.svg'"
+            }
+           }
+          },
+          "url": {
+           "expr": {
+            "ResourcePackageItem": {
+             "PackageName": "RegisteredResources",
+             "PackageType": 1,
+             "ItemName": "funnel-selected6667502763815211.svg"
+            }
+           }
+          },
+          "scaling": {
+           "expr": {
+            "Literal": {
+             "Value": "'Normal'"
+            }
+           }
+          }
+         }
+        }
+       },
+       "selector": {
+        "id": "disabled"
+       }
+      }
+     ],
+     "outline": [
+      {
+       "properties": {
+        "show": {
+         "expr": {
+          "Literal": {
+           "Value": "false"
+          }
+         }
+        }
+       }
+      }
+     ],
+     "shape": [
+      {
+       "properties": {
+        "roundEdge": {
+         "expr": {
+          "Literal": {
+           "Value": "0L"
+          }
+         }
+        }
+       },
+       "selector": {
+        "id": "default"
+       }
+      }
+     ],
+     "text": [
+      {
+       "properties": {
+        "show": {
+         "expr": {
+          "Literal": {
+           "Value": "false"
+          }
+         }
+        }
+       }
+      },
+      {
+       "properties": {
+        "text": {
+         "expr": {
+          "Literal": {
+           "Value": "''"
+          }
+         }
+        }
+       },
+       "selector": {
+        "id": "hover"
+       }
+      }
+     ],
+     "fill": [
+      {
+       "properties": {
+        "show": {
+         "expr": {
+          "Literal": {
+           "Value": "true"
+          }
+         }
+        }
+       }
+      },
+      {
+       "properties": {
+        "transparency": {
+         "expr": {
+          "Literal": {
+           "Value": "0D"
+          }
+         }
+        }
+       },
+       "selector": {
+        "id": "default"
+       }
+      },
+      {
+       "properties": {
+        "fillColor": {
+         "solid": {
+          "color": {
+           "expr": {
+            "Literal": {
+             "Value": "'#EDF3F8'"
+            }
+           }
+          }
+         }
+        }
+       },
+       "selector": {
+        "id": "hover"
+       }
+      }
+     ]
+    },
+    "visualContainerObjects": {
+     "visualLink": [
+      {
+       "properties": {
+        "show": {
+         "expr": {
+          "Literal": {
+           "Value": "true"
+          }
+         }
+        },
+        "type": {
+         "expr": {
+          "Literal": {
+           "Value": "'Bookmark'"
+          }
+         }
+        },
+        "bookmark": {
+         "expr": {
+          "Literal": {
+           "Value": "'d75f48b1ad166ac88295'"
+          }
+         }
+        },
+        "tooltip": {
+         "expr": {
+          "Literal": {
+           "Value": "'Click here to apply filters'"
+          }
+         }
+        }
+       }
+      }
+     ],
+     "title": [
+      {
+       "properties": {
+        "text": {
+         "expr": {
+          "Literal": {
+           "Value": "'CloseFilterButton'"
+          }
+         }
+        }
+       }
+      }
+     ]
+    },
+    "drillFilterOtherVisuals": true
+   }
+  },
+  {
+   "visualType": "image",
+   "position": {
+    "x": 0,
+    "y": 2.622660693806232,
+    "width": 39.12928625857252,
+    "height": 23.539978910260853,
+    "z": 0,
+    "tabOrder": 1000
+   },
+   "visual": {
+    "visualType": "image",
+    "objects": {
+     "general": [
+      {
+       "properties": {
+        "imageUrl": {
+         "expr": {
+          "ResourcePackageItem": {
+           "PackageName": "RegisteredResources",
+           "PackageType": 1,
+           "ItemName": "filter_(1)5702342020123368.png"
+          }
+         }
+        }
+       }
+      }
+     ]
+    },
+    "visualContainerObjects": {
+     "background": [
+      {
+       "properties": {
+        "show": {
+         "expr": {
+          "Literal": {
+           "Value": "false"
+          }
+         }
+        }
+       }
+      }
+     ]
+    },
+    "drillFilterOtherVisuals": true
+   }
+  },
+  {
+   "visualType": "shape",
+   "position": {
+    "x": 1535.8227848101267,
+    "y": 0,
+    "width": 22.27848101265823,
+    "height": 64,
+    "z": 3000,
+    "tabOrder": 2000
+   },
+   "visual": {
+    "visualType": "shape",
+    "objects": {
+     "shape": [
+      {
+       "properties": {
+        "tileShape": {
+         "expr": {
+          "Literal": {
+           "Value": "'line'"
+          }
+         }
+        }
+       }
+      }
+     ],
+     "rotation": [
+      {
+       "properties": {
+        "shapeAngle": {
+         "expr": {
+          "Literal": {
+           "Value": "90L"
+          }
+         }
+        }
+       }
+      }
+     ],
+     "outline": [
+      {
+       "properties": {
+        "weight": {
+         "expr": {
+          "Literal": {
+           "Value": "0.5D"
+          }
+         }
+        },
+        "lineColor": {
+         "solid": {
+          "color": {
+           "expr": {
+            "Literal": {
+             "Value": "'#DDE6EE'"
+            }
+           }
+          }
+         }
+        }
+       },
+       "selector": {
+        "id": "default"
+       }
+      }
+     ],
+     "fill": [
+      {
+       "properties": {
+        "show": {
+         "expr": {
+          "Literal": {
+           "Value": "false"
+          }
+         }
+        }
+       }
+      }
+     ]
+    },
+    "visualContainerObjects": {
+     "title": [
+      {
+       "properties": {
+        "text": {
+         "expr": {
+          "Literal": {
+           "Value": "'Divider'"
+          }
+         }
+        }
+       }
+      }
+     ]
+    },
+    "drillFilterOtherVisuals": true
+   }
+  },
+  {
+   "visualType": "textbox",
+   "position": {
+    "x": 0,
+    "y": 0,
+    "width": 104,
+    "height": 20,
+    "z": 0,
+    "tabOrder": 1000
+   },
+   "visual": {
+    "visualType": "textbox",
+    "objects": {
+     "general": [
+      {
+       "properties": {
+        "paragraphs": [
+         {
+          "textRuns": [
+           {
+            "value": "Filtered Year:",
+            "textStyle": {
+             "fontSize": "11pt",
+             "color": "#314259"
+            }
+           }
+          ]
+         }
+        ]
+       }
+      }
+     ]
+    },
+    "visualContainerObjects": {
+     "padding": [
+      {
+       "properties": {
+        "top": {
+         "expr": {
+          "Literal": {
+           "Value": "0D"
+          }
+         }
+        },
+        "bottom": {
+         "expr": {
+          "Literal": {
+           "Value": "0D"
+          }
+         }
+        },
+        "left": {
+         "expr": {
+          "Literal": {
+           "Value": "5D"
+          }
+         }
+        },
+        "right": {
+         "expr": {
+          "Literal": {
+           "Value": "0D"
+          }
+         }
+        }
+       }
+      }
+     ],
+     "background": [
+      {
+       "properties": {
+        "transparency": {
+         "expr": {
+          "Literal": {
+           "Value": "100D"
+          }
+         }
+        }
+       }
+      }
+     ]
+    },
+    "drillFilterOtherVisuals": true
+   }
+  },
+  {
+   "visualType": "image",
+   "position": {
+    "x": 349,
+    "y": 0,
+    "width": 18,
+    "height": 18,
+    "z": 1000,
+    "tabOrder": 1000
+   },
+   "visual": {
+    "visualType": "image",
+    "objects": {
+     "general": [
+      {
+       "properties": {
+        "imageUrl": {
+         "expr": {
+          "ResourcePackageItem": {
+           "PackageName": "RegisteredResources",
+           "PackageType": 1,
+           "ItemName": "calendar-clock22602159510656294.png"
+          }
+         }
+        }
+       }
+      }
+     ]
+    },
+    "visualContainerObjects": {
+     "padding": [
+      {
+       "properties": {
+        "left": {
+         "expr": {
+          "Literal": {
+           "Value": "0D"
+          }
+         }
+        },
+        "top": {
+         "expr": {
+          "Literal": {
+           "Value": "0D"
+          }
+         }
+        },
+        "right": {
+         "expr": {
+          "Literal": {
+           "Value": "0D"
+          }
+         }
+        },
+        "bottom": {
+         "expr": {
+          "Literal": {
+           "Value": "0D"
+          }
+         }
+        }
+       }
+      }
+     ],
+     "title": [
+      {
+       "properties": {
+        "text": {
+         "expr": {
+          "Literal": {
+           "Value": "'Refresh Icon'"
+          }
+         }
+        }
+       }
+      }
+     ]
+    },
+    "drillFilterOtherVisuals": true
+   }
+  },
+  {
+   "visualType": "actionButton",
+   "position": {
+    "x": 1548.3544303797469,
+    "y": 0,
+    "width": 211.64556962025318,
+    "height": 63.999999999999986,
+    "z": 1000,
+    "tabOrder": 6000
+   },
+   "visual": {
+    "visualType": "actionButton",
+    "objects": {
+     "icon": [
+      {
+       "properties": {
+        "shapeType": {
+         "expr": {
+          "Literal": {
+           "Value": "'custom'"
+          }
+         }
+        },
+        "placement": {
+         "expr": {
+          "Literal": {
+           "Value": "'custom'"
+          }
+         }
+        },
+        "image": {
+         "image": {
+          "name": {
+           "expr": {
+            "Literal": {
+             "Value": "'chevron-up.svg'"
+            }
+           }
+          },
+          "url": {
+           "expr": {
+            "ResourcePackageItem": {
+             "PackageName": "RegisteredResources",
+             "PackageType": 1,
+             "ItemName": "chevron-up8801889235435335.svg"
+            }
+           }
+          },
+          "scaling": {
+           "expr": {
+            "Literal": {
+             "Value": "'Normal'"
+            }
+           }
+          }
+         }
+        },
+        "topMargin": {
+         "expr": {
+          "Literal": {
+           "Value": "20L"
+          }
+         }
+        },
+        "bottomMargin": {
+         "expr": {
+          "Literal": {
+           "Value": "17L"
+          }
+         }
+        },
+        "leftMargin": {
+         "expr": {
+          "Literal": {
+           "Value": "16L"
+          }
+         }
+        },
+        "rightMargin": {
+         "expr": {
+          "Literal": {
+           "Value": "32L"
+          }
+         }
+        },
+        "horizontalAlignment": {
+         "expr": {
+          "Literal": {
+           "Value": "'right'"
+          }
+         }
+        }
+       },
+       "selector": {
+        "id": "default"
+       }
+      },
+      {
+       "properties": {
+        "show": {
+         "expr": {
+          "Literal": {
+           "Value": "true"
+          }
+         }
+        }
+       }
+      }
+     ],
+     "text": [
+      {
+       "properties": {
+        "show": {
+         "expr": {
+          "Literal": {
+           "Value": "true"
+          }
+         }
+        }
+       }
+      },
+      {
+       "properties": {
+        "text": {
+         "expr": {
+          "Literal": {
+           "Value": "'Organization'"
+          }
+         }
+        },
+        "fontColor": {
+         "solid": {
+          "color": {
+           "expr": {
+            "Literal": {
+             "Value": "'#44566F'"
+            }
+           }
+          }
+         }
+        },
+        "fontFamily": {
+         "expr": {
+          "Literal": {
+           "Value": "'''Segoe UI'', wf_segoe-ui_normal, helvetica, arial, sans-serif'"
+          }
+         }
+        },
+        "horizontalAlignment": {
+         "expr": {
+          "Literal": {
+           "Value": "'left'"
+          }
+         }
+        },
+        "leftMargin": {
+         "expr": {
+          "Literal": {
+           "Value": "24L"
+          }
+         }
+        },
+        "bottomMargin": {
+         "expr": {
+          "Literal": {
+           "Value": "7L"
+          }
+         }
+        },
+        "fontSize": {
+         "expr": {
+          "Literal": {
+           "Value": "12D"
+          }
+         }
+        },
+        "topMargin": {
+         "expr": {
+          "Literal": {
+           "Value": "3L"
+          }
+         }
+        }
+       },
+       "selector": {
+        "id": "default"
+       }
+      },
+      {
+       "properties": {
+        "fontColor": {
+         "solid": {
+          "color": {
+           "expr": {
+            "Literal": {
+             "Value": "'#314259'"
+            }
+           }
+          }
+         }
+        }
+       },
+       "selector": {
+        "id": "hover"
+       }
+      }
+     ],
+     "outline": [
+      {
+       "properties": {
+        "show": {
+         "expr": {
+          "Literal": {
+           "Value": "false"
+          }
+         }
+        }
+       }
+      },
+      {
+       "properties": {
+        "lineColor": {
+         "solid": {
+          "color": {
+           "expr": {
+            "ThemeDataColor": {
+             "ColorId": 0,
+             "Percent": 0
+            }
+           }
+          }
+         }
+        },
+        "weight": {
+         "expr": {
+          "Literal": {
+           "Value": "1D"
+          }
+         }
+        }
+       },
+       "selector": {
+        "id": "default"
+       }
+      },
+      {
+       "properties": {
+        "lineColor": {
+         "solid": {
+          "color": {
+           "expr": {
+            "ThemeDataColor": {
+             "ColorId": 0,
+             "Percent": 0
+            }
+           }
+          }
+         }
+        }
+       },
+       "selector": {
+        "id": "hover"
+       }
+      }
+     ],
+     "shape": [
+      {
+       "properties": {
+        "roundEdge": {
+         "expr": {
+          "Literal": {
+           "Value": "0L"
+          }
+         }
+        }
+       },
+       "selector": {
+        "id": "default"
+       }
+      }
+     ],
+     "fill": [
+      {
+       "properties": {
+        "show": {
+         "expr": {
+          "Literal": {
+           "Value": "true"
+          }
+         }
+        }
+       }
+      },
+      {
+       "properties": {
+        "fillColor": {
+         "solid": {
+          "color": {
+           "expr": {
+            "ThemeDataColor": {
+             "ColorId": 0,
+             "Percent": 0
+            }
+           }
+          }
+         }
+        },
+        "transparency": {
+         "expr": {
+          "Literal": {
+           "Value": "0D"
+          }
+         }
+        }
+       },
+       "selector": {
+        "id": "default"
+       }
+      },
+      {
+       "properties": {
+        "fillColor": {
+         "solid": {
+          "color": {
+           "expr": {
+            "Literal": {
+             "Value": "'#EDF3F8'"
+            }
+           }
+          }
+         }
+        }
+       },
+       "selector": {
+        "id": "hover"
+       }
+      }
+     ]
+    },
+    "visualContainerObjects": {
+     "background": [
+      {
+       "properties": {
+        "show": {
+         "expr": {
+          "Literal": {
+           "Value": "false"
+          }
+         }
+        },
+        "color": {
+         "solid": {
+          "color": {
+           "expr": {
+            "Literal": {
+             "Value": "'#0078BF'"
+            }
+           }
+          }
+         }
+        }
+       }
+      }
+     ],
+     "title": [
+      {
+       "properties": {
+        "text": {
+         "expr": {
+          "Literal": {
+           "Value": "'Hide Org Area Select'"
+          }
+         }
+        }
+       }
+      }
+     ],
+     "visualLink": [
+      {
+       "properties": {
+        "show": {
+         "expr": {
+          "Literal": {
+           "Value": "true"
+          }
+         }
+        },
+        "type": {
+         "expr": {
+          "Literal": {
+           "Value": "'Bookmark'"
+          }
+         }
+        },
+        "bookmark": {
+         "expr": {
+          "Literal": {
+           "Value": "'44b90def1c0e70420856'"
+          }
+         }
+        },
+        "showDefaultTooltip": {
+         "expr": {
+          "Literal": {
+           "Value": "false"
+          }
+         }
+        }
+       }
+      }
+     ]
+    },
+    "drillFilterOtherVisuals": true
+   }
+  },
+  {
+   "visualType": "image",
+   "position": {
+    "x": 0,
+    "y": 8,
+    "width": 167.08860759493672,
+    "height": 53.33333333333333,
+    "z": 9000,
+    "tabOrder": 9000
+   },
+   "visual": {
+    "visualType": "image",
+    "objects": {
+     "general": [
+      {
+       "properties": {
+        "imageUrl": {
+         "expr": {
+          "ResourcePackageItem": {
+           "PackageName": "RegisteredResources",
+           "PackageType": 1,
+           "ItemName": "locus_logo_cropped_(1)6222486184357785.png"
+          }
+         }
+        }
+       }
+      }
+     ],
+     "imageScaling": [
+      {
+       "properties": {
+        "imageScalingType": {
+         "expr": {
+          "Literal": {
+           "Value": "'Normal'"
+          }
+         }
+        }
+       }
+      }
+     ]
+    },
+    "visualContainerObjects": {
+     "padding": [
+      {
+       "properties": {
+        "top": {
+         "expr": {
+          "Literal": {
+           "Value": "5D"
+          }
+         }
+        }
+       }
+      }
+     ],
+     "lockAspect": [
+      {
+       "properties": {
+        "show": {
+         "expr": {
+          "Literal": {
+           "Value": "true"
+          }
+         }
+        }
+       }
+      }
+     ],
+     "dropShadow": [
+      {
+       "properties": {
+        "show": {
+         "expr": {
+          "Literal": {
+           "Value": "false"
+          }
+         }
+        },
+        "color": {
+         "solid": {
+          "color": {
+           "expr": {
+            "Literal": {
+             "Value": "'#e6e6e6'"
+            }
+           }
+          }
+         }
+        }
+       }
+      }
+     ],
+     "title": [
+      {
+       "properties": {
+        "text": {
+         "expr": {
+          "Literal": {
+           "Value": "'LocusLogo'"
+          }
+         }
+        }
+       }
+      }
+     ]
+    },
+    "drillFilterOtherVisuals": true
+   }
+  },
+  {
+   "visualType": "shape",
+   "position": {
+    "x": 0,
+    "y": 0,
+    "width": 1760.0000000000002,
+    "height": 64,
+    "z": 0,
+    "tabOrder": 10000
+   },
+   "visual": {
+    "visualType": "shape",
+    "objects": {
+     "shape": [
+      {
+       "properties": {
+        "tileShape": {
+         "expr": {
+          "Literal": {
+           "Value": "'rectangle'"
+          }
+         }
+        }
+       }
+      }
+     ],
+     "rotation": [
+      {
+       "properties": {
+        "shapeAngle": {
+         "expr": {
+          "Literal": {
+           "Value": "0L"
+          }
+         }
+        }
+       }
+      }
+     ],
+     "fill": [
+      {
+       "properties": {
+        "fillColor": {
+         "solid": {
+          "color": {
+           "expr": {
+            "ThemeDataColor": {
+             "ColorId": 0,
+             "Percent": 0
+            }
+           }
+          }
+         }
+        }
+       },
+       "selector": {
+        "id": "default"
+       }
+      }
+     ],
+     "outline": [
+      {
+       "properties": {
+        "show": {
+         "expr": {
+          "Literal": {
+           "Value": "false"
+          }
+         }
+        }
+       }
+      }
+     ],
+     "shadow": [
+      {
+       "properties": {
+        "show": {
+         "expr": {
+          "Literal": {
+           "Value": "false"
+          }
+         }
+        }
+       }
+      },
+      {
+       "properties": {
+        "shadowPositionPreset": {
+         "expr": {
+          "Literal": {
+           "Value": "'bottom'"
+          }
+         }
+        },
+        "shadowBlur": {
+         "expr": {
+          "Literal": {
+           "Value": "0D"
+          }
+         }
+        },
+        "transparency": {
+         "expr": {
+          "Literal": {
+           "Value": "61D"
+          }
+         }
+        },
+        "color": {
+         "solid": {
+          "color": {
+           "expr": {
+            "ThemeDataColor": {
+             "ColorId": 0,
+             "Percent": -0.2
+            }
+           }
+          }
+         }
+        }
+       },
+       "selector": {
+        "id": "default"
+       }
+      }
+     ]
+    },
+    "visualContainerObjects": {
+     "title": [
+      {
+       "properties": {
+        "text": {
+         "expr": {
+          "Literal": {
+           "Value": "'Panel'"
+          }
+         }
+        }
+       }
+      }
+     ]
+    },
+    "drillFilterOtherVisuals": true
+   }
+  },
+  {
+   "visualType": "textbox",
+   "position": {
+    "x": 0,
+    "y": 0,
+    "width": 592,
+    "height": 32,
+    "z": 0,
+    "tabOrder": 0
+   },
+   "visual": {
+    "visualType": "textbox",
+    "objects": {
+     "general": [
+      {
+       "properties": {
+        "paragraphs": [
+         {
+          "textRuns": [
+           {
+            "value": "Last Data import:",
+            "textStyle": {
+             "color": "#334a67"
+            }
+           },
+           {
+            "value": " 1/8/2026 1:14 PM            ",
+            "textStyle": {
+             "fontWeight": "bold",
+             "color": "#334a67"
+            }
+           },
+           {
+            "value": "Dashboard Refreshes: ",
+            "textStyle": {
+             "color": "#334a67"
+            }
+           },
+           {
+            "value": "6:00 AM Daily",
+            "textStyle": {
+             "fontWeight": "bold",
+             "color": "#334a67"
+            }
+           }
+          ],
+          "horizontalTextAlignment": "right"
+         }
+        ]
+       }
+      }
+     ]
+    },
+    "visualContainerObjects": {
+     "padding": [
+      {
+       "properties": {
+        "top": {
+         "expr": {
+          "Literal": {
+           "Value": "0D"
+          }
+         }
+        },
+        "bottom": {
+         "expr": {
+          "Literal": {
+           "Value": "0D"
+          }
+         }
+        },
+        "left": {
+         "expr": {
+          "Literal": {
+           "Value": "0D"
+          }
+         }
+        },
+        "right": {
+         "expr": {
+          "Literal": {
+           "Value": "0D"
+          }
+         }
+        }
+       }
+      }
+     ],
+     "background": [
+      {
+       "properties": {
+        "transparency": {
+         "expr": {
+          "Literal": {
+           "Value": "100D"
+          }
+         }
+        }
+       }
+      }
+     ],
+     "title": [
+      {
+       "properties": {
+        "text": {
+         "expr": {
+          "Literal": {
+           "Value": "'Data Import Schedule'"
+          }
+         }
+        }
+       }
+      }
+     ]
+    },
+    "drillFilterOtherVisuals": true
+   }
+  },
+  {
+   "visualType": "textbox",
+   "position": {
+    "x": 0,
+    "y": 0,
+    "width": 54.09090909090909,
+    "height": 22.04166666666667,
+    "z": 0,
+    "tabOrder": 1000
+   },
+   "visual": {
+    "visualType": "textbox",
+    "objects": {
+     "general": [
+      {
+       "properties": {
+        "paragraphs": [
+         {
+          "textRuns": [
+           {
+            "value": "Entity:",
+            "textStyle": {
+             "fontSize": "11pt",
+             "color": "#314259"
+            }
+           }
+          ]
+         }
+        ]
+       }
+      }
+     ]
+    },
+    "visualContainerObjects": {
+     "padding": [
+      {
+       "properties": {
+        "top": {
+         "expr": {
+          "Literal": {
+           "Value": "0D"
+          }
+         }
+        },
+        "bottom": {
+         "expr": {
+          "Literal": {
+           "Value": "0D"
+          }
+         }
+        },
+        "left": {
+         "expr": {
+          "Literal": {
+           "Value": "5D"
+          }
+         }
+        },
+        "right": {
+         "expr": {
+          "Literal": {
+           "Value": "0D"
+          }
+         }
+        }
+       }
+      }
+     ],
+     "background": [
+      {
+       "properties": {
+        "transparency": {
+         "expr": {
+          "Literal": {
+           "Value": "100D"
+          }
+         }
+        }
+       }
+      }
+     ]
+    },
+    "drillFilterOtherVisuals": true
+   }
+  },
+  {
+   "visualType": "shape",
+   "position": {
+    "x": 1466.2025316455697,
+    "y": 0,
+    "width": 22.27848101265823,
+    "height": 64,
+    "z": 6000,
+    "tabOrder": 4000
+   },
+   "visual": {
+    "visualType": "shape",
+    "objects": {
+     "shape": [
+      {
+       "properties": {
+        "tileShape": {
+         "expr": {
+          "Literal": {
+           "Value": "'line'"
+          }
+         }
+        }
+       }
+      }
+     ],
+     "rotation": [
+      {
+       "properties": {
+        "shapeAngle": {
+         "expr": {
+          "Literal": {
+           "Value": "90L"
+          }
+         }
+        }
+       }
+      }
+     ],
+     "outline": [
+      {
+       "properties": {
+        "weight": {
+         "expr": {
+          "Literal": {
+           "Value": "0.5D"
+          }
+         }
+        },
+        "lineColor": {
+         "solid": {
+          "color": {
+           "expr": {
+            "Literal": {
+             "Value": "'#DDE6EE'"
+            }
+           }
+          }
+         }
+        }
+       },
+       "selector": {
+        "id": "default"
+       }
+      }
+     ],
+     "fill": [
+      {
+       "properties": {
+        "show": {
+         "expr": {
+          "Literal": {
+           "Value": "false"
+          }
+         }
+        }
+       }
+      }
+     ]
+    },
+    "visualContainerObjects": {
+     "title": [
+      {
+       "properties": {
+        "text": {
+         "expr": {
+          "Literal": {
+           "Value": "'Divider'"
+          }
+         }
+        }
+       }
+      }
+     ]
+    },
+    "drillFilterOtherVisuals": true
+   }
+  },
+  {
+   "visualType": "actionButton",
+   "position": {
+    "x": 0,
+    "y": 0,
+    "width": 109.95405263062311,
+    "height": 37.95313247250119,
+    "z": 1000,
+    "tabOrder": 1000
+   },
+   "visual": {
+    "visualType": "actionButton",
+    "objects": {
+     "icon": [
+      {
+       "properties": {
+        "shapeType": {
+         "expr": {
+          "Literal": {
+           "Value": "'blank'"
+          }
+         }
+        }
+       },
+       "selector": {
+        "id": "default"
+       }
+      },
+      {
+       "properties": {
+        "show": {
+         "expr": {
+          "Literal": {
+           "Value": "false"
+          }
+         }
+        }
+       }
+      }
+     ],
+     "text": [
+      {
+       "properties": {
+        "show": {
+         "expr": {
+          "Literal": {
+           "Value": "true"
+          }
+         }
+        }
+       }
+      },
+      {
+       "properties": {
+        "text": {
+         "expr": {
+          "Literal": {
+           "Value": "'Support'"
+          }
+         }
+        },
+        "fontColor": {
+         "solid": {
+          "color": {
+           "expr": {
+            "Literal": {
+             "Value": "'#0077BF'"
+            }
+           }
+          }
+         }
+        },
+        "fontFamily": {
+         "expr": {
+          "Literal": {
+           "Value": "'''Segoe UI Semibold'', wf_segoe-ui_semibold, helvetica, arial, sans-serif'"
+          }
+         }
+        },
+        "fontSize": {
+         "expr": {
+          "Literal": {
+           "Value": "12D"
+          }
+         }
+        }
+       },
+       "selector": {
+        "id": "default"
+       }
+      },
+      {
+       "properties": {
+        "fontColor": {
+         "solid": {
+          "color": {
+           "expr": {
+            "ThemeDataColor": {
+             "ColorId": 0,
+             "Percent": 0
+            }
+           }
+          }
+         }
+        }
+       },
+       "selector": {
+        "id": "hover"
+       }
+      }
+     ],
+     "outline": [
+      {
+       "properties": {
+        "show": {
+         "expr": {
+          "Literal": {
+           "Value": "true"
+          }
+         }
+        }
+       }
+      },
+      {
+       "properties": {
+        "lineColor": {
+         "solid": {
+          "color": {
+           "expr": {
+            "Literal": {
+             "Value": "'#0077BF'"
+            }
+           }
+          }
+         }
+        },
+        "weight": {
+         "expr": {
+          "Literal": {
+           "Value": "1D"
+          }
+         }
+        }
+       },
+       "selector": {
+        "id": "default"
+       }
+      }
+     ],
+     "shape": [
+      {
+       "properties": {
+        "roundEdge": {
+         "expr": {
+          "Literal": {
+           "Value": "4L"
+          }
+         }
+        }
+       },
+       "selector": {
+        "id": "default"
+       }
+      }
+     ],
+     "fill": [
+      {
+       "properties": {
+        "show": {
+         "expr": {
+          "Literal": {
+           "Value": "true"
+          }
+         }
+        }
+       }
+      },
+      {
+       "properties": {
+        "fillColor": {
+         "solid": {
+          "color": {
+           "expr": {
+            "ThemeDataColor": {
+             "ColorId": 0,
+             "Percent": 0
+            }
+           }
+          }
+         }
+        },
+        "transparency": {
+         "expr": {
+          "Literal": {
+           "Value": "0D"
+          }
+         }
+        }
+       },
+       "selector": {
+        "id": "default"
+       }
+      },
+      {
+       "properties": {
+        "fillColor": {
+         "solid": {
+          "color": {
+           "expr": {
+            "Literal": {
+             "Value": "'#0077BF'"
+            }
+           }
+          }
+         }
+        }
+       },
+       "selector": {
+        "id": "hover"
+       }
+      }
+     ]
+    },
+    "visualContainerObjects": {
+     "background": [
+      {
+       "properties": {
+        "show": {
+         "expr": {
+          "Literal": {
+           "Value": "false"
+          }
+         }
+        },
+        "color": {
+         "solid": {
+          "color": {
+           "expr": {
+            "Literal": {
+             "Value": "'#0078BF'"
+            }
+           }
+          }
+         }
+        }
+       }
+      }
+     ],
+     "title": [
+      {
+       "properties": {
+        "text": {
+         "expr": {
+          "Literal": {
+           "Value": "'Support'"
+          }
+         }
+        }
+       }
+      }
+     ]
+    },
+    "drillFilterOtherVisuals": true
+   }
+  },
+  {
+   "visualType": "actionButton",
+   "position": {
+    "x": 128.1012658227845,
+    "y": 0,
+    "width": 153.42425948459038,
+    "height": 37.95313247250119,
+    "z": 0,
+    "tabOrder": 0
+   },
+   "visual": {
+    "visualType": "actionButton",
+    "objects": {
+     "icon": [
+      {
+       "properties": {
+        "shapeType": {
+         "expr": {
+          "Literal": {
+           "Value": "'blank'"
+          }
+         }
+        }
+       },
+       "selector": {
+        "id": "default"
+       }
+      },
+      {
+       "properties": {
+        "show": {
+         "expr": {
+          "Literal": {
+           "Value": "false"
+          }
+         }
+        }
+       }
+      }
+     ],
+     "text": [
+      {
+       "properties": {
+        "show": {
+         "expr": {
+          "Literal": {
+           "Value": "true"
+          }
+         }
+        }
+       }
+      },
+      {
+       "properties": {
+        "text": {
+         "expr": {
+          "Literal": {
+           "Value": "'Feature Request'"
+          }
+         }
+        },
+        "fontColor": {
+         "solid": {
+          "color": {
+           "expr": {
+            "Literal": {
+             "Value": "'#0077BF'"
+            }
+           }
+          }
+         }
+        },
+        "fontFamily": {
+         "expr": {
+          "Literal": {
+           "Value": "'''Segoe UI Semibold'', wf_segoe-ui_semibold, helvetica, arial, sans-serif'"
+          }
+         }
+        },
+        "fontSize": {
+         "expr": {
+          "Literal": {
+           "Value": "12D"
+          }
+         }
+        }
+       },
+       "selector": {
+        "id": "default"
+       }
+      },
+      {
+       "properties": {
+        "fontColor": {
+         "solid": {
+          "color": {
+           "expr": {
+            "ThemeDataColor": {
+             "ColorId": 0,
+             "Percent": 0
+            }
+           }
+          }
+         }
+        }
+       },
+       "selector": {
+        "id": "hover"
+       }
+      }
+     ],
+     "outline": [
+      {
+       "properties": {
+        "show": {
+         "expr": {
+          "Literal": {
+           "Value": "true"
+          }
+         }
+        }
+       }
+      },
+      {
+       "properties": {
+        "lineColor": {
+         "solid": {
+          "color": {
+           "expr": {
+            "Literal": {
+             "Value": "'#0077BF'"
+            }
+           }
+          }
+         }
+        },
+        "weight": {
+         "expr": {
+          "Literal": {
+           "Value": "1D"
+          }
+         }
+        }
+       },
+       "selector": {
+        "id": "default"
+       }
+      }
+     ],
+     "shape": [
+      {
+       "properties": {
+        "roundEdge": {
+         "expr": {
+          "Literal": {
+           "Value": "4L"
+          }
+         }
+        }
+       },
+       "selector": {
+        "id": "default"
+       }
+      }
+     ],
+     "fill": [
+      {
+       "properties": {
+        "show": {
+         "expr": {
+          "Literal": {
+           "Value": "true"
+          }
+         }
+        }
+       }
+      },
+      {
+       "properties": {
+        "fillColor": {
+         "solid": {
+          "color": {
+           "expr": {
+            "ThemeDataColor": {
+             "ColorId": 0,
+             "Percent": 0
+            }
+           }
+          }
+         }
+        },
+        "transparency": {
+         "expr": {
+          "Literal": {
+           "Value": "0D"
+          }
+         }
+        }
+       },
+       "selector": {
+        "id": "default"
+       }
+      },
+      {
+       "properties": {
+        "fillColor": {
+         "solid": {
+          "color": {
+           "expr": {
+            "Literal": {
+             "Value": "'#0077BF'"
+            }
+           }
+          }
+         }
+        }
+       },
+       "selector": {
+        "id": "hover"
+       }
+      }
+     ]
+    },
+    "visualContainerObjects": {
+     "background": [
+      {
+       "properties": {
+        "show": {
+         "expr": {
+          "Literal": {
+           "Value": "false"
+          }
+         }
+        },
+        "color": {
+         "solid": {
+          "color": {
+           "expr": {
+            "Literal": {
+             "Value": "'#0078BF'"
+            }
+           }
+          }
+         }
+        }
+       }
+      }
+     ],
+     "title": [
+      {
+       "properties": {
+        "text": {
+         "expr": {
+          "Literal": {
+           "Value": "'FeatureRequest'"
+          }
+         }
+        }
+       }
+      }
+     ]
+    },
+    "drillFilterOtherVisuals": true
+   }
+  },
+  {
+   "visualType": "textbox",
+   "position": {
+    "x": 46.36363636363637,
+    "y": 0,
+    "width": 38.63636363636364,
+    "height": 23,
+    "z": 1000,
+    "tabOrder": 0
+   },
+   "visual": {
+    "visualType": "textbox",
+    "objects": {
+     "general": [
+      {
+       "properties": {
+        "paragraphs": [
+         {
+          "textRuns": [
+           {
+            "value": "All",
+            "textStyle": {
+             "fontWeight": "bold",
+             "fontSize": "11pt",
+             "textDecoration": "underline",
+             "color": "#045ea8"
+            }
+           }
+          ]
+         }
+        ]
+       }
+      }
+     ]
+    },
+    "visualContainerObjects": {
+     "padding": [
+      {
+       "properties": {
+        "top": {
+         "expr": {
+          "Literal": {
+           "Value": "0D"
+          }
+         }
+        },
+        "bottom": {
+         "expr": {
+          "Literal": {
+           "Value": "0D"
+          }
+         }
+        },
+        "left": {
+         "expr": {
+          "Literal": {
+           "Value": "5D"
+          }
+         }
+        },
+        "right": {
+         "expr": {
+          "Literal": {
+           "Value": "0D"
+          }
+         }
+        }
+       }
+      }
+     ],
+     "background": [
+      {
+       "properties": {
+        "transparency": {
+         "expr": {
+          "Literal": {
+           "Value": "100D"
+          }
+         }
+        }
+       }
+      }
+     ]
+    },
+    "drillFilterOtherVisuals": true
+   }
+  }
+ ]
+}
