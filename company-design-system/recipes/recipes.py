@@ -182,6 +182,21 @@ def _shape(report, page, x, y, w, h, fill, border, z):
         "outline": [{"properties": {"show": lit("true"), "lineColor": litcolor(border), "weight": lit("1D")}}],
     }, "drillFilterOtherVisuals": True})
 
+def _textbox_multi(report, page, x, y, w, h, paragraphs, z, align="left", bg=None, border=None):
+    """paragraphs: list of (text, color, size_pt, bold) -> one textbox, one paragraph each."""
+    paras = []
+    for (text, color, size, bold) in paragraphs:
+        style = {"fontWeight": "bold" if bold else "normal", "fontSize": f"{size}pt",
+                 "color": color, "fontFamily": "Segoe UI"}
+        paras.append({"textRuns": [{"value": text, "textStyle": style}], "horizontalTextAlignment": align})
+    visual = {"visualType": "textbox", "objects": {"general": [{"properties": {"paragraphs": paras}}]}}
+    vco = {}
+    if bg: vco["background"] = [{"properties": {"show": lit("true"), "color": litcolor(bg)}}]
+    if border: vco["border"] = [{"properties": {"show": lit("true"), "color": litcolor(border), "radius": lit("6D")}}]
+    else: vco["border"] = [{"properties": {"show": lit("false")}}]  # no default Power BI border
+    visual["visualContainerObjects"] = vco
+    _write_visual(report, page, new_id(), _pos(x, y, w, h, z), visual)
+
 def _textbox(report, page, x, y, w, h, text, color, size, bold, align, z, bg=None, border=None):
     style = {"fontWeight": "bold" if bold else "normal", "fontSize": f"{size}pt",
              "color": color, "fontFamily": "Segoe UI"}
@@ -190,26 +205,250 @@ def _textbox(report, page, x, y, w, h, text, color, size, bold, align, z, bg=Non
     vco = {}
     if bg: vco["background"] = [{"properties": {"show": lit("true"), "color": litcolor(bg)}}]
     if border: vco["border"] = [{"properties": {"show": lit("true"), "color": litcolor(border), "radius": lit("6D")}}]
-    if vco: visual["visualContainerObjects"] = vco
+    else: vco["border"] = [{"properties": {"show": lit("false")}}]  # no default Power BI border
+    visual["visualContainerObjects"] = vco
+    _write_visual(report, page, new_id(), _pos(x, y, w, h, z), visual)
+
+def _refresh_line(report, page, x, y, w, imported, refreshes, z):
+    """Top-right 'Last Data import / Dashboard Refreshes' line (LOCUS style: #334A67,
+    labels normal + values bold), one right-aligned paragraph."""
+    mk = lambda v, b: {"value": v, "textStyle": {"fontWeight": "bold" if b else "normal",
+                       "fontSize": "9pt", "color": "#334A67", "fontFamily": "Segoe UI"}}
+    runs = [mk("Last Data import: ", False), mk(imported + "    ", True),
+            mk("Dashboard Refreshes: ", False), mk(refreshes, True)]
+    visual = {"visualType": "textbox", "objects": {"general": [{"properties": {"paragraphs":
+              [{"textRuns": runs, "horizontalTextAlignment": "right"}]}}]},
+              "visualContainerObjects": {"border": [{"properties": {"show": lit("false")}}]}}
+    _write_visual(report, page, new_id(), _pos(x, y, w, 16, z), visual)
+
+def _action_button(report, page, x, y, w, h, text, accent, z, surface=SURFACE):
+    """A real LOCUS actionButton: white fill, accent outline + Segoe UI Semibold 12pt accent
+    text, 4px rounded edges, hover inverts to accent fill + white text. (Matches the
+    DesignSystemsTemplate Support / Feature Request buttons.)"""
+    visual = {"visualType": "actionButton", "objects": {
+        "icon": [{"properties": {"shapeType": lit("'blank'")}, "selector": {"id": "default"}},
+                 {"properties": {"show": lit("false")}}],
+        "text": [{"properties": {"show": lit("true")}},
+                 {"properties": {"text": lit(f"'{text}'"), "fontColor": litcolor(accent),
+                                 "fontFamily": lit(SEMI), "fontSize": lit("12D")}, "selector": {"id": "default"}},
+                 {"properties": {"fontColor": litcolor(surface)}, "selector": {"id": "hover"}}],
+        "outline": [{"properties": {"show": lit("true")}},
+                    {"properties": {"lineColor": litcolor(accent), "weight": lit("1D")}, "selector": {"id": "default"}}],
+        "shape": [{"properties": {"roundEdge": lit("4L")}, "selector": {"id": "default"}}],
+        "fill": [{"properties": {"show": lit("true")}},
+                 {"properties": {"fillColor": litcolor(surface), "transparency": lit("0D")}, "selector": {"id": "default"}},
+                 {"properties": {"fillColor": litcolor(accent)}, "selector": {"id": "hover"}}],
+    }, "drillFilterOtherVisuals": True}
     _write_visual(report, page, new_id(), _pos(x, y, w, h, z), visual)
 
 def brand_nav_header(report, page, **o):
-    """Build a clean Company nav header: white bar + title + Support / Feature Request
-    buttons + a Filters toggle, sized to the page width. (The Filters toggle's show/hide
-    bookmark action is a manual wire-up in Desktop.)"""
+    """Build the LOCUS nav header (sized to page width): white bar + two-line title (blue
+    Segoe UI Bold 14pt name over a slate 11pt subtitle, matching DesignSystemsTemplate) +
+    a top-right 'Last Data import / Dashboard Refreshes' line + Support / Feature Request
+    buttons + a Filters (funnel) pill. --set title= subtitle= [titlex=20 clears a left logo]
+    [imported='1/8/2026 1:14 PM'] [refreshes='6:00 AM Daily'] [accent=#0078BF] [height=64].
+    (Filter toggle + button click actions are a manual bookmark wire-up in Desktop.)"""
     title = o.get("title", "Dashboard Name")
+    subtitle = o.get("subtitle", "View")
     accent = o.get("accent", "#0078BF")
+    imported = o.get("imported", "1/8/2026 1:14 PM")
+    refreshes = o.get("refreshes", "6:00 AM Daily")
     W = load(page_json(report, page)).get("width", 1280)
-    z = 9000
+    H = int(o.get("height", 64)); z = 9000
+    # pushContent: shift every existing visual down (for bare pages whose content starts at y=0,
+    # so the nav doesn't cover it). Run BEFORE adding nav visuals. Watch bottom overflow.
+    dy = float(o.get("pushContent", 0))
+    if dy:
+        for f in visual_files(report, page):
+            d = load(f); p = d.get("position")
+            if p and isinstance(p.get("y"), (int, float)):
+                p["y"] += dy; save(f, d)
     # bar
-    _shape(report, page, 0, 0, W, 56, SURFACE, BORDER, z)
-    # title
-    _textbox(report, page, 20, 8, 600, 40, title, VALUE_NAVY, 20, True, "left", z + 1)
-    # buttons (right-aligned)
-    _textbox(report, page, W - 322, 12, 92, 32, "Support", accent, 11, False, "center", z + 1, bg=SURFACE, border=accent)
-    _textbox(report, page, W - 222, 12, 164, 32, "Feature Request", accent, 11, False, "center", z + 1, bg=SURFACE, border=accent)
-    _textbox(report, page, W - 46, 12, 34, 32, "▼", accent, 12, False, "center", z + 1, bg=SURFACE, border=BORDER)
-    return f"built clean nav header (title='{title}', width={W})"
+    _shape(report, page, 0, 0, W, H, SURFACE, BORDER, z)
+    # title block: blue name + slate subtitle (LOCUS spec). titlex clears a left logo.
+    tx = int(o.get("titlex", 20))
+    _textbox_multi(report, page, tx, 8, 600, H - 12,
+                   [(title, accent, 14, True), (subtitle, SLATE, 11, False)], z + 1, align="left")
+    # top-right refresh / import info line
+    _refresh_line(report, page, W - 626, 6, 610, imported, refreshes, z + 1)
+    # buttons row (lower-right, leaves room for the refresh line above) -- real actionButtons
+    by = H - 38
+    _action_button(report, page, W - 452, by, 96, 32, "Support", accent, z + 1)
+    _action_button(report, page, W - 348, by, 156, 32, "Feature Request", accent, z + 1)
+    _action_button(report, page, W - 184, by, 166, 32, "▾ Filters", accent, z + 1)
+    return f"built LOCUS nav header (title='{title}', width={W}, h={H})"
+
+# ============================================================ RESCALE
+def rescale_page(report, page, **o):
+    """Scale a page and every visual on it by a uniform ratio so the layout keeps its
+    proportions on a larger canvas. --set width=1792 (target width) or --set ratio=1.4.
+    Scales grouped visuals too -- uniform scaling is correct for both absolute and
+    group-relative child coordinates."""
+    pjp = page_json(report, page); pj = load(pjp)
+    cur_w = pj.get("width", 1280)
+    r = float(o["ratio"]) if "ratio" in o else float(o.get("width", 1792)) / cur_w
+    pj["width"] = round(cur_w * r, 4)
+    pj["height"] = round(pj.get("height", 720) * r, 4)
+    save(pjp, pj)
+    n = 0
+    for f in visual_files(report, page):
+        d = load(f); p = d.get("position")
+        if not p: continue
+        for k in ("x", "y", "width", "height"):
+            if isinstance(p.get(k), (int, float)):
+                p[k] = round(p[k] * r, 4)
+        save(f, d); n += 1
+    return f"rescaled page x{r:.4f} -> {pj['width']}x{pj['height']}, {n} visuals"
+
+# ============================================================ REPORT-LEVEL
+def apply_theme(report, page=None, **o):
+    """Register the Company Design System theme (LOCUS palette) as the report's custom theme:
+    copies the theme into StaticResources/RegisteredResources and wires report.json
+    (themeCollection.customTheme + resourcePackages). Report-level -- no --page needed.
+    --set theme=<path to .json> overrides the default kit theme."""
+    import shutil
+    here = os.path.dirname(os.path.abspath(__file__))
+    src = os.path.abspath(o.get("theme") or os.path.join(here, "..", "theme", "CompanyDesignSystem.theme.json"))
+    if not os.path.exists(src):
+        raise SystemExit(f"theme not found: {src}")
+    reg = os.path.join(report, "StaticResources", "RegisteredResources")
+    os.makedirs(reg, exist_ok=True)
+    fname = o.get("name", f"Company_Design_System{new_id()}.json")
+    shutil.copyfile(src, os.path.join(reg, fname))
+    rjp = os.path.join(report, "definition", "report.json"); rj = load(rjp)
+    tc = rj.setdefault("themeCollection", {})
+    # Power BI REQUIRES reportVersionAtImport on customTheme -- reuse the base theme's, else default.
+    rvi = (tc.get("baseTheme") or {}).get("reportVersionAtImport") or {"visual": "2.9.0", "report": "3.3.0", "page": "2.3.1"}
+    tc["customTheme"] = {"name": fname, "reportVersionAtImport": rvi, "type": "RegisteredResources"}
+    pkgs = rj.setdefault("resourcePackages", [])
+    regpkg = next((p for p in pkgs if p.get("name") == "RegisteredResources"), None)
+    if regpkg is None:
+        regpkg = {"name": "RegisteredResources", "type": "RegisteredResources", "items": []}
+        pkgs.append(regpkg)
+    regpkg["items"] = [it for it in regpkg.get("items", []) if it.get("type") != "CustomTheme"]
+    regpkg["items"].append({"name": fname, "path": fname, "type": "CustomTheme"})
+    save(rjp, rj)
+    return f"applied custom theme -> {fname}"
+
+# ============================================================ DUPLICATE
+def duplicate_page(report, page, **o):
+    """Duplicate a page as a CLEAN copy with regenerated visual ids (so bookmarks/originals are
+    untouched), then register it in pages.json. Reskin the copy, keep the original. New
+    displayName defaults to '<name> 2'. --set name='New Name'. This replaces the manual
+    'duplicate page in Desktop' step."""
+    import shutil
+    src_id = resolve_page(report, page)
+    pd = lib.pages_dir(report)
+    new_pid = new_id()
+    dst = os.path.join(pd, new_pid)
+    shutil.copytree(os.path.join(pd, src_id), dst)
+    vis_dir = os.path.join(dst, "visuals")
+    idmap = {v: new_id() for v in os.listdir(vis_dir)} if os.path.isdir(vis_dir) else {}
+    for old, newv in idmap.items():
+        os.rename(os.path.join(vis_dir, old), os.path.join(vis_dir, newv))
+    for newv in idmap.values():
+        f = os.path.join(vis_dir, newv, "visual.json")
+        d = load(f); d["name"] = newv
+        if d.get("parentGroupName") in idmap: d["parentGroupName"] = idmap[d["parentGroupName"]]
+        save(f, d)
+    pjp = os.path.join(dst, "page.json"); pj = load(pjp)
+    src_name = pj.get("displayName", "Page")
+    pj["name"] = new_pid; pj["displayName"] = o.get("name", f"{src_name} 2")
+    for it in pj.get("visualInteractions", []):
+        for k in ("source", "target"):
+            if it.get(k) in idmap: it[k] = idmap[it[k]]
+    save(pjp, pj)
+    pmp = os.path.join(pd, "pages.json"); pm = load(pmp)
+    pm.setdefault("pageOrder", []).append(new_pid)
+    save(pmp, pm)
+    return f"duplicated '{src_name}' -> '{pj['displayName']}' ({new_pid}, {len(idmap)} visuals re-id'd)"
+
+# ============================================================ PANEL HEADERS
+def panel_header(report, page, **o):
+    """LOCUS section header inside a panel's top band: bold blue title over a slate subtitle
+    (matches DesignSystemsTemplate panel titles, e.g. 'CAMPUS SCORECARD / Performance
+    Overview' = 14pt #0078bf bold + 10.5pt #607890). Pair with hide-title on the chart so the
+    native title doesn't double up. --set x= y= title= [subtitle=] [w=320] [accent=#0078BF]
+    [size=14] [divider=true]."""
+    x = float(o["x"]); y = float(o["y"]); w = float(o.get("w", 320))
+    title = o["title"]; subtitle = o.get("subtitle", "")
+    accent = o.get("accent", "#0078BF"); size = float(o.get("size", 14))
+    z = int(o.get("z", 8500))
+    paras = [(title, accent, size, True)]
+    if subtitle: paras.append((subtitle, SLATE, 10.5, False))
+    h = float(o.get("h", 48 if subtitle else 30))
+    _textbox_multi(report, page, x, y, w, h, paras, z, align="left")
+    if o.get("divider", "false").lower() == "true":
+        _shape(report, page, x, y + h + 2, w, 1, BORDER, BORDER, z - 1)
+    return f"panel header '{title}'" + (f" / '{subtitle}'" if subtitle else "") + f" at ({x},{y})"
+
+def panel_title(report, page, **o):
+    """Apply the LOCUS *native* visual title band to a visual (the real LOCUS method): navy
+    Segoe UI Semibold title (12pt #314259) on an #EDF3F8 background + slate subtitle (#47607E)
+    + a matching divider, with LOCUS spacing (2/10/10). The native title reserves its own
+    space inside the visual, so the plot shrinks automatically -- no manual nudging, no textbox
+    scrollbars. --set visual=<id> title=.. [subtitle=..] [bg=#EDF3F8] [color=#314259]
+    [size=12] [border=true]."""
+    vid = o["visual"]; title = o["title"]; subtitle = o.get("subtitle", "")
+    if subtitle:  # Title Case, but keep all-caps acronyms (QA, PBi) intact -> looks professional
+        subtitle = " ".join(w if (len(w) > 1 and w.isupper()) else (w[:1].upper() + w[1:])
+                            for w in subtitle.split())
+    bg = o.get("bg", "#EDF3F8"); navy = o.get("color", "#314259"); slate = o.get("slate", "#47607E")
+    size = o.get("size", "12")
+    f = os.path.join(lib.pages_dir(report), page, "visuals", vid, "visual.json")
+    d = load(f); vco = container(d)
+    vco["title"] = [{"properties": {
+        "show": lit("true"), "text": lit(f"'{title}'"), "heading": lit("'Heading2'"),
+        "titleWrap": lit("true"), "fontColor": litcolor(navy), "background": litcolor(bg),
+        "alignment": lit("'left'"), "fontSize": lit(f"{size}D"), "bold": lit("false"),
+        "fontFamily": lit(SEMI)}}]
+    if subtitle:
+        vco["subTitle"] = [{"properties": {
+            "show": lit("true"), "text": lit(f"'{subtitle}'"), "heading": lit("'Heading4'"),
+            "fontColor": litcolor(slate), "fontSize": lit("10D")}}]
+    vco["divider"] = [{"properties": {
+        "show": lit("true"), "color": litcolor(o.get("divider", bg)), "ignorePadding": lit("true")}}]
+    vco["spacing"] = [{"properties": {
+        "customizeSpacing": lit("true"), "verticalSpacing": lit("2D"),
+        "spaceBelowTitle": lit("2D"), "spaceBelowSubTitle": lit("10D"),
+        "spaceBelowTitleArea": lit("10D")}}]
+    if o.get("border", "false").lower() == "true":
+        vco["border"] = [{"properties": {"show": lit("true"), "color": litcolor(BORDER), "radius": lit("8D")}}]
+    save(f, d)
+    return f"native LOCUS title on {vid}: '{title}'" + (f" / '{subtitle}'" if subtitle else "")
+
+def strip_chrome(report, page, **o):
+    """CLEAN-SLATE first step -- strip non-data decorative leftovers so a page starts as bare as
+    the design template before the design system goes on. Removes enlightenDataStory /
+    smart-narrative visuals by default; --set ids=<id>,<id> removes specific visuals too. Prints
+    the SURVIVING shapes/images/textboxes so you can eyeball what is chrome vs real content."""
+    import shutil
+    ids = set(filter(None, o.get("ids", "").split(",")))
+    removed = []; survivors = []
+    for f in visual_files(report, page):
+        d = load(f); vt = vtype(d); vid = os.path.basename(os.path.dirname(f))
+        if vt.lower().startswith("enlighten") or "smartnarrative" in vt.lower() or vid in ids:
+            shutil.rmtree(os.path.dirname(f)); removed.append(f"{vt[:18] or 'group'}:{vid[:8]}"); continue
+        if vt in ("shape", "image", "textbox"):
+            p = d.get("position", {})
+            survivors.append(f"{vt}:{vid[:8]} ({p.get('x',0):.0f},{p.get('y',0):.0f},{p.get('width',0):.0f},{p.get('height',0):.0f})")
+    out = f"stripped {len(removed)} chrome visual(s): {removed}"
+    if survivors: out += "\n  surviving chrome (review): " + " | ".join(survivors)
+    return out
+
+def hide_title(report, page, **o):
+    """Turn off native visual titles so an overlaid panel-header reads cleanly.
+    --set visual=<id> targets one visual; otherwise hides titles on all titled visuals."""
+    vid = o.get("visual"); n = 0
+    for f in visual_files(report, page):
+        if vid and os.path.basename(os.path.dirname(f)) != vid: continue
+        d = load(f)
+        if vtype(d) not in TITLE_TYPES: continue
+        t = container(d).get("title") or [{}]
+        props = t[0].setdefault("properties", {}); props["show"] = lit("false")
+        container(d)["title"] = [{"properties": props}]
+        save(f, d); n += 1
+    return f"hid native title on {n} visuals"
 
 # ============================================================ ADDITIVE
 def card_label_fix(report, page, **o):
@@ -288,6 +527,9 @@ RECIPES = {
     "strip-axis-override": strip_axis_override, "strip-legend-override": strip_legend_override,
     "clean-page-background": clean_page_background, "neutralize-panels": neutralize_panels,
     "brand-header": brand_header, "wrap-in-panel": wrap_in_panel, "brand-nav-header": brand_nav_header,
+    "rescale-page": rescale_page, "panel-header": panel_header, "hide-title": hide_title,
+    "panel-title": panel_title, "strip-chrome": strip_chrome, "duplicate-page": duplicate_page,
+    "apply-theme": apply_theme,
     "card-label-fix": card_label_fix, "kpi-status-color": kpi_status_color,
     "threshold-line": threshold_line, "accent-bar-status": accent_bar_status,
     "semantic-series-colors": semantic_series_colors,
@@ -306,12 +548,18 @@ def main():
         return
     if a.recipe not in RECIPES:
         raise SystemExit(f"unknown recipe '{a.recipe}'. Try: python recipes.py list")
-    if not a.report or not a.page:
+    REPORT_LEVEL = {"apply-theme"}  # operate on the whole report, no --page
+    if not a.report:
+        raise SystemExit("--report is required")
+    if a.recipe not in REPORT_LEVEL and not a.page:
         raise SystemExit("--report and --page are required")
 
     opts = dict(kv.split("=", 1) for kv in a.set)
-    page = resolve_page(a.report, a.page)
-    print("RESULT:", RECIPES[a.recipe](a.report, page, **opts))
+    if a.recipe in REPORT_LEVEL:
+        print("RESULT:", RECIPES[a.recipe](a.report, **opts))
+    else:
+        page = resolve_page(a.report, a.page)
+        print("RESULT:", RECIPES[a.recipe](a.report, page, **opts))
 
     bad = validate(a.report); dangle = scan_dangling(a.report); schema = check_visual_schema(a.report)
     print(f"validate: {'OK' if not bad else bad}")
