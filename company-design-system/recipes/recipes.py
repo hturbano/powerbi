@@ -367,10 +367,30 @@ def add_matrix(report, page, **o):
         "drillFilterOtherVisuals": True}
     if "heatmeasure" in o:
         he, hp = o["heatmeasure"].split(".", 1)
-        cond = _conditional(he, hp, [[float(o.get("heatband", 1)), o.get("hot", "#F8C9CC")]], o.get("cold", "#C8EAD3"))
-        visual["objects"] = {"values": [{"properties": {"backColor": cond}, "selector": {"metadata": o["value"]}}]}
+        band = o.get("heatband", "1")
+        mref = {"Measure": {"Expression": {"SourceRef": {"Entity": he}}, "Property": hp}}
+        cases = {"Cases": [{"Condition": {"Comparison": {"ComparisonKind": 2, "Left": mref,
+                            "Right": {"Literal": {"Value": f"{band}D"}}}},
+                            "Value": {"Literal": {"Value": "'%s'" % o.get("hot", "#C8EAD3")}}}]}
+        if o.get("cold"):  # else: only 'hot' cells colored, rest left blank
+            cases["Default"] = {"Literal": {"Value": "'%s'" % o["cold"]}}
+        cond = {"solid": {"color": {"expr": {"Conditional": cases}}}}
+        # the dataViewWildcard selector is REQUIRED for matrix cell background to apply
+        visual["objects"] = {"values": [{"properties": {"backColor": cond},
+            "selector": {"data": [{"dataViewWildcard": {"matchingOption": 1}}], "metadata": o["value"]}}]}
     _write_visual(report, page, new_id(), _pos(x, y, w, h, z), visual)
     return f"added matrix heatmap rows={o['rows']} cols={o['cols']} value={o['value']}"
+
+def add_table(report, page, **o):
+    """Add a tableEx bound to a list of columns (left to right). --set columns=
+    'etl_executions.run_start_dt,etl_executions.duration_sec,etl_executions.status_label' x= y= [w= h= z=]."""
+    cols = [c.strip() for c in o["columns"].split(",") if c.strip()]
+    projs = [_column_field(c, active=(i == 0)) for i, c in enumerate(cols)]
+    x = float(o["x"]); y = float(o["y"]); w = float(o.get("w", 900)); h = float(o.get("h", 400)); z = int(o.get("z", 500))
+    visual = {"visualType": "tableEx",
+        "query": {"queryState": {"Values": {"projections": projs}}}, "drillFilterOtherVisuals": True}
+    _write_visual(report, page, new_id(), _pos(x, y, w, h, z), visual)
+    return f"added table ({len(cols)} cols) at ({x},{y})"
 
 # ============================================================ REPORT-LEVEL
 def apply_theme(report, page=None, **o):
@@ -602,6 +622,7 @@ RECIPES = {
     "rescale-page": rescale_page, "panel-header": panel_header, "hide-title": hide_title,
     "panel-title": panel_title, "strip-chrome": strip_chrome, "duplicate-page": duplicate_page,
     "apply-theme": apply_theme, "add-card": add_card, "add-chart": add_chart, "add-matrix": add_matrix,
+    "add-table": add_table,
     "card-label-fix": card_label_fix, "kpi-status-color": kpi_status_color,
     "threshold-line": threshold_line, "accent-bar-status": accent_bar_status,
     "semantic-series-colors": semantic_series_colors,
