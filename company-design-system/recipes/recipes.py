@@ -300,6 +300,78 @@ def rescale_page(report, page, **o):
         save(f, d); n += 1
     return f"rescaled page x{r:.4f} -> {pj['width']}x{pj['height']}, {n} visuals"
 
+# ============================================================ BUILD VISUALS
+def _measure_field(spec):
+    """'Entity.Measure Name' -> a Measure field-ref dict + queryRef/nativeQueryRef."""
+    e, p = spec.split(".", 1)
+    return {"field": {"Measure": {"Expression": {"SourceRef": {"Entity": e}}, "Property": p}},
+            "queryRef": spec, "nativeQueryRef": p}
+
+def _column_field(spec, active=False):
+    """'Entity.Column' -> a Column field-ref dict."""
+    e, p = spec.split(".", 1)
+    f = {"field": {"Column": {"Expression": {"SourceRef": {"Entity": e}}, "Property": p}},
+         "queryRef": spec, "nativeQueryRef": p}
+    if active: f["active"] = True
+    return f
+
+def add_card(report, page, **o):
+    """Add a single-value KPI card bound to a measure, styled as a LOCUS white card (navy bold
+    value + slate label, #C0CFDD rounded border). --set measure='ETL Success Rate %' x= y=
+    [w=330 h=150 entity=_Measures z=1000]."""
+    measure = o["measure"]; entity = o.get("entity", "_Measures")
+    x = float(o["x"]); y = float(o["y"]); w = float(o.get("w", 330)); h = float(o.get("h", 150)); z = int(o.get("z", 1000))
+    visual = {"visualType": "card",
+        "query": {"queryState": {"Values": {"projections": [_measure_field(f"{entity}.{measure}")]}}},
+        "objects": {
+            "labels": [{"properties": {"color": litcolor(VALUE_NAVY), "fontSize": lit("30D"), "fontFamily": lit(BOLD)}}],
+            "categoryLabels": [{"properties": {"show": lit("true"), "color": litcolor(SLATE),
+                                "fontSize": lit("11D"), "fontFamily": lit(SEMI)}}]},
+        "visualContainerObjects": {
+            "background": [{"properties": {"show": lit("true"), "color": litcolor(SURFACE)}}],
+            "border": [{"properties": {"show": lit("true"), "color": litcolor(BORDER), "radius": lit("8D")}}]},
+        "drillFilterOtherVisuals": True}
+    _write_visual(report, page, new_id(), _pos(x, y, w, h, z), visual)
+    return f"added KPI card '{measure}' at ({x},{y})"
+
+def add_chart(report, page, **o):
+    """Add a bar/column/line chart bound to a category COLUMN + a measure VALUE, sorted by the
+    value descending (great for Top-N). --set type=clusteredBarChart
+    category='etl_executions.job_name' value='_Measures.Avg Run Time (min)' x= y= [w= h= z=]."""
+    vt = o.get("type", "clusteredBarChart")
+    cat = _column_field(o["category"], active=True)
+    val = _measure_field(o["value"])
+    x = float(o["x"]); y = float(o["y"]); w = float(o.get("w", 600)); h = float(o.get("h", 400)); z = int(o.get("z", 500))
+    sort_field = cat["field"] if o.get("sortby") == "category" else val["field"]
+    visual = {"visualType": vt,
+        "query": {"queryState": {"Category": {"projections": [cat]}, "Y": {"projections": [val]}},
+                  "sortDefinition": {"sort": [{"field": sort_field, "direction": o.get("sort", "Descending")}]}},
+        "drillFilterOtherVisuals": True}
+    _write_visual(report, page, new_id(), _pos(x, y, w, h, z), visual)
+    return f"added {vt} {o['category']} x {o['value']} at ({x},{y})"
+
+def add_matrix(report, page, **o):
+    """Add a matrix heatmap: Rows = a column, Columns = a column, Values = a measure, with an
+    optional conditional cell background (the heat). --set rows='etl_executions.job_name'
+    cols='etl_executions.Run Date' value='_Measures.Total Runs' x= y= [w= h= z=]
+    [heatmeasure='_Measures.Failed Runs' heatband=1 hot='#F8C9CC' cold='#C8EAD3'] -- when
+    heatmeasure >= heatband the cell turns 'hot', otherwise 'cold' (blank cells stay blank)."""
+    rows = _column_field(o["rows"], active=True)
+    cols = _column_field(o["cols"], active=True)
+    val = _measure_field(o["value"])
+    x = float(o["x"]); y = float(o["y"]); w = float(o.get("w", 1000)); h = float(o.get("h", 600)); z = int(o.get("z", 500))
+    visual = {"visualType": "pivotTable",
+        "query": {"queryState": {"Rows": {"projections": [rows]},
+                                 "Columns": {"projections": [cols]},
+                                 "Values": {"projections": [val]}}},
+        "drillFilterOtherVisuals": True}
+    if "heatmeasure" in o:
+        he, hp = o["heatmeasure"].split(".", 1)
+        cond = _conditional(he, hp, [[float(o.get("heatband", 1)), o.get("hot", "#F8C9CC")]], o.get("cold", "#C8EAD3"))
+        visual["objects"] = {"values": [{"properties": {"backColor": cond}, "selector": {"metadata": o["value"]}}]}
+    _write_visual(report, page, new_id(), _pos(x, y, w, h, z), visual)
+    return f"added matrix heatmap rows={o['rows']} cols={o['cols']} value={o['value']}"
+
 # ============================================================ REPORT-LEVEL
 def apply_theme(report, page=None, **o):
     """Register the Company Design System theme (LOCUS palette) as the report's custom theme:
@@ -529,7 +601,7 @@ RECIPES = {
     "brand-header": brand_header, "wrap-in-panel": wrap_in_panel, "brand-nav-header": brand_nav_header,
     "rescale-page": rescale_page, "panel-header": panel_header, "hide-title": hide_title,
     "panel-title": panel_title, "strip-chrome": strip_chrome, "duplicate-page": duplicate_page,
-    "apply-theme": apply_theme,
+    "apply-theme": apply_theme, "add-card": add_card, "add-chart": add_chart, "add-matrix": add_matrix,
     "card-label-fix": card_label_fix, "kpi-status-color": kpi_status_color,
     "threshold-line": threshold_line, "accent-bar-status": accent_bar_status,
     "semantic-series-colors": semantic_series_colors,
